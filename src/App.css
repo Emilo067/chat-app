@@ -8,28 +8,8 @@
 
     grid-template-rows: 60px 1fr;
     grid-template-columns: 2fr 10fr;
-    /*gap: 10px;*/
+    gap: 10px;
 }
 
-.header {
-    grid-area: h;
-    background-color: orange;
-}
 
-.header img {
-    width: 20px;
-}
 
-.nav {
-    grid-area: n;
-    background-color: green;
-}
-
-.content {
-    grid-area: c;
-    background-color: greenyellow;
-}
-
-.content img {
-    width: 90%;
-}

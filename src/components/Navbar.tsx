@@ -1,15 +1,20 @@
 import React from 'react';
-
+import styled from "styled-components";
 const Navbar = () => {
     return (
-        <nav className="nav">
+        <StyledNav>
             <div>Profile</div>
             <div>Messages</div>
             <div>News</div>
             <div>Music</div>
             <div>Settings</div>
-        </nav>
+        </StyledNav>
     );
 };
 
 export default Navbar;
+
+const StyledNav = styled.nav`
+  grid-area: n;
+  background-color: green;
+`
