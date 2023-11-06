@@ -1,34 +1,42 @@
-import React from 'react';
+import React, {FC} from 'react';
 import './App.css';
-import Header from "./components/header/Header";
-import Navbar from "./components/navbar/Navbar";
-import Profile from "./components/profile/Profile";
-import Dialogs from "./components/dialogs/Dialogs";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {News} from "./components/news/News";
-import {Settings} from "./components/settings/Settings";
-import {Music} from "./components/music/Music";
+import Header from "./layout/header/Header";
+import {Navigate, Route, Routes} from "react-router-dom";
+import {RootStateType} from "./redux/state";
+import Navbar from "./layout/navbar/Navbar";
+import Profile from "./layout/content/profile/Profile";
+import Dialogs from "./layout/content/dialogs/Dialogs";
+import {News} from "./layout/content/news/News";
+import {Music} from "./layout/content/music/Music";
+import {Settings} from "./layout/content/settings/Settings";
 
-const App = () => {
+type AppPropsType = {
+    state: RootStateType
+    addPost: (text: string) => void
+}
+
+const App: FC<AppPropsType> = ({state, addPost}) => {
+
     return (
 
-            <div className="app-wrapper">
-                <Header/>
-                <Navbar/>
+        <div className="app-wrapper">
+            <Header/>
+            <Navbar sidebarData={state.sidebar}/>
 
-                <div className={"app-wrapper-content"}>
+            <div className={"app-wrapper-content"}>
 
-                    <Routes>
-                        <Route path={'/profile'} element={<Profile/>}/>
-                        <Route path={'/dialogs/*'} element={<Dialogs/>}/>
-                        <Route path={'/news'} element={<News/>}/>
-                        <Route path={'/music'} element={<Music/>}/>
-                        <Route path={'/settings'} element={<Settings/>}/>
-                    </Routes>
-
-                </div>
+                <Routes>
+                    <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
+                    <Route path={'/profile'} element={<Profile postData={state.profilePage} addPost={addPost}/>}/>
+                    <Route path={'/dialogs/*'} element={<Dialogs dialogsData={state.dialogsPage}/>}/>
+                    <Route path={'/news'} element={<News/>}/>
+                    <Route path={'/music'} element={<Music/>}/>
+                    <Route path={'/settings'} element={<Settings/>}/>
+                </Routes>
 
             </div>
+
+        </div>
 
     );
 }

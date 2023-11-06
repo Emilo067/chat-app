@@ -1,20 +1,25 @@
 import React, {FC} from 'react';
 import styled from "styled-components";
-import img from "../../../../assets/img/avatarkaPost.png"
+import {Avatar} from "../../../../../components/avatar/Avatar";
+import ava from '../../../../../assets/img/avatarkaPost.png'
+
 
 type PostPropsType = {
     post: string
+    likes: number
 }
 
 const Post: FC<PostPropsType> = (
     {
-        post
+        post,
+        likes
     }
 ) => {
     return (
         <StyledPost>
-            <img src={img} alt={""}/>
+            <Avatar img={ava}/>
             {post}
+            <div>likes: {likes}</div>
         </StyledPost>
     );
 };
