@@ -1,18 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import {GlobalStyles} from "./styles/GlobalStyles";
+import store from './redux/state'
+import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
-import {addPost, state} from './redux/state'
+import {GlobalStyles} from "./styles/GlobalStyles";
+import App from "./App";
+import React from "react";
 
 
+export const rerenderReactTree = (state: any) => {
+    ReactDOM.render(
+        <BrowserRouter>
+            <GlobalStyles/>
+            <App state={state} addPost={store.addPost.bind(store)} updateNewPostText={store.updateNewPostText.bind(store)}/>
+        </BrowserRouter>,
+        document.getElementById('root')
+    );
+}
+
+rerenderReactTree(store.getState())
 
 
-ReactDOM.render(
-    <BrowserRouter>
-        <GlobalStyles/>
-        <App state={state} addPost={addPost}/>
-    </BrowserRouter>,
-    document.getElementById('root')
-);
+store.subscribe(rerenderReactTree)

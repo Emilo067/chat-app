@@ -7,17 +7,18 @@ import {ProfilePageType} from "../../../redux/state";
 
 type ProfilePropsType = {
     postData: ProfilePageType
-    addPost: (text: string) => void
+    addPost: () => void
+    updateNewPostText: (text: string) => void
 }
 
-const Profile: FC<ProfilePropsType> = ({postData, addPost}) => {
+const Profile: FC<ProfilePropsType> = ({postData, addPost, updateNewPostText}) => {
 
 
     return (
         <StyledProfile>
             <BackgroundImg/>
             <AvaDescription/>
-            <MyPosts postData={postData.posts} addPost={addPost}/>
+            <MyPosts updateNewPostText={updateNewPostText} postData={postData} addPost={addPost}/>
         </StyledProfile>
     );
 };

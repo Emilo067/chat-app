@@ -1,27 +1,35 @@
 import React, {FC, useRef} from 'react';
 import styled from "styled-components";
 import Post from "./post/Post";
-import {PostType} from "../../../../redux/state";
+import {ProfilePageType} from "../../../../redux/state";
 
 type MyPostsPropsType = {
-    postData: PostType[]
-    addPost: (text: string) => void
-
+    postData: ProfilePageType
+    addPost: () => void
+    updateNewPostText: (text: string) => void
 }
 
-const MyPosts: FC<MyPostsPropsType> = ({postData, addPost}) => {
+const MyPosts: FC<MyPostsPropsType> = (props: MyPostsPropsType) => {
 
 
     const newPostElement = useRef<HTMLTextAreaElement>(null)
 
 
     const addPostHandler = () => {
+        debugger;
         if (newPostElement.current !== null) {
-            addPost(newPostElement.current.value)
+            props.addPost()
+        }
+
+    }
+
+    const onChangeHandler = () => {
+        if (newPostElement.current) {
+            props.updateNewPostText(newPostElement.current.value)
         }
     }
 
-    const posts = postData.map(p => {
+    const posts = props.postData.posts.map(p => {
         return <Post post={p.post} likes={p.likes}/>
     })
 
@@ -29,7 +37,8 @@ const MyPosts: FC<MyPostsPropsType> = ({postData, addPost}) => {
         <StyledMyPosts>
             <h3>My posts</h3>
             <div>
-                <textarea ref={newPostElement} style={{width: "100%", resize: "none"}}/>
+                <textarea onChange={onChangeHandler} value={props.postData.newPostText} ref={newPostElement}
+                          style={{width: "100%", resize: "none"}}/>
                 <button onClick={addPostHandler} style={{display: "block", float: "right"}}>Send</button>
             </div>
 

@@ -12,10 +12,11 @@ import {Settings} from "./layout/content/settings/Settings";
 
 type AppPropsType = {
     state: RootStateType
-    addPost: (text: string) => void
+    addPost: () => void
+    updateNewPostText: (text: string) => void
 }
 
-const App: FC<AppPropsType> = ({state, addPost}) => {
+const App: FC<AppPropsType> = ({state, addPost, updateNewPostText}) => {
 
     return (
 
@@ -27,7 +28,7 @@ const App: FC<AppPropsType> = ({state, addPost}) => {
 
                 <Routes>
                     <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
-                    <Route path={'/profile'} element={<Profile postData={state.profilePage} addPost={addPost}/>}/>
+                    <Route path={'/profile'} element={<Profile updateNewPostText={updateNewPostText} postData={state.profilePage} addPost={addPost}/>}/>
                     <Route path={'/dialogs/*'} element={<Dialogs dialogsData={state.dialogsPage}/>}/>
                     <Route path={'/news'} element={<News/>}/>
                     <Route path={'/music'} element={<Music/>}/>

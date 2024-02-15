@@ -38,6 +38,7 @@ const Navbar: FC<NavbarPropsType> = ({sidebarData}) => {
             <StyledFriendsContent>
 
                 {friendsMap}
+
             </StyledFriendsContent>
         </StyledNavbarContent>
 
@@ -54,7 +55,7 @@ const StyledNavbarContent = styled.div`
 
 
 const StyledNav = styled.nav`
-  
+
 `
 
 const StyledItem = styled.div`
@@ -74,13 +75,13 @@ const StyledItem = styled.div`
   }
 `
 
-const StyledFriendsContent =    styled.div`
+const StyledFriendsContent = styled.div`
   display: flex;
   justify-content: space-around;
   gap: 10px;
 `
 
-const TitleFriends =    styled.h3`
+const TitleFriends = styled.h3`
   margin: 40px 0 10px 0;
   text-align: center;
   color: white;

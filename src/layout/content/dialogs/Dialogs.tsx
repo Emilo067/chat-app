@@ -16,12 +16,12 @@ const Dialogs: FC<DialogPropsType> = ({dialogsData}) => {
     })
 
     const messages = dialogsData.messages.map(m => {
-        return <Message key={m.id} text={m.text} side={m.id % 2 === 0}/>
+        return <Message key={m.id} text={m.text}/>
     })
 
     const messageElement = useRef<HTMLTextAreaElement>(null)
 
-    const asendMessage = () => {
+    const sendMessage = () => {
         if(messageElement.current !== null) {
             alert(messageElement.current.value)
         }
@@ -37,7 +37,7 @@ const Dialogs: FC<DialogPropsType> = ({dialogsData}) => {
 
                 <div>
                     <textarea ref={messageElement} style={{width: "100%", resize: "none"}}/>
-                    <button onClick={asendMessage} style={{display: "block", float: "right"}}>Send</button>
+                    <button onClick={sendMessage} style={{display: "block", float: "right"}}>Send</button>
                 </div>
             </StyledMessages>
         </StyledDialogs>
