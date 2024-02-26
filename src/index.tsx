@@ -7,17 +7,17 @@ import App from "./App";
 import React from "react";
 
 
-export const rerenderReactTree = (state: any) => {
+export const rerenderEntireTree = (state: any) => {
     ReactDOM.render(
         <BrowserRouter>
             <GlobalStyles/>
-            <App state={state} addPost={store.addPost.bind(store)} updateNewPostText={store.updateNewPostText.bind(store)}/>
+            <App state={state} dispatch={store.dispatch.bind(store)}/>
         </BrowserRouter>,
         document.getElementById('root')
     );
 }
 
-rerenderReactTree(store.getState())
+rerenderEntireTree(store.getState())
 
 
-store.subscribe(rerenderReactTree)
+store.subscribe(rerenderEntireTree)

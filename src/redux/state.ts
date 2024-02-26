@@ -1,5 +1,7 @@
 import ava from '../assets/img/avatarkaPost.png'
-
+import {sidebarReducer} from "./sidebar-reducer";
+import {AddPostACType, profileReducer, UpdateNewPostTextACType} from "./profile-reducer";
+import {AddMessageACType, dialogsReducer, UpdateNewMessageTextACType} from "./dialogs-reducer";
 
 
 export type PostType = {
@@ -25,6 +27,7 @@ export type ProfilePageType = {
 export type DialogsPageType = {
     dialogs: DialogsDataType[]
     messages: MessageDataType[]
+    newMessageText: string
 }
 
 export type FriendsType = {
@@ -42,6 +45,8 @@ export type RootStateType = {
     sidebar: SidebarType
 }
 
+export type ActionType = AddPostACType | UpdateNewPostTextACType | UpdateNewMessageTextACType | AddMessageACType
+
 
 let store = {
     _state: {
@@ -52,12 +57,14 @@ let store = {
                 {id: 3, name: 'Igor'},
                 {id: 4, name: 'Max'}
             ],
-            messages: [
-                {id: 1, text: 'Hi'},
-                {id: 2, text: 'How are you?'},
-                {id: 3, text: 'I`m fine'},
-                {id: 4, text: 'cool'}
-            ]
+            messages:
+                [
+                    {id: 1, text: 'Hi'},
+                    {id: 2, text: 'How are you?'},
+                    {id: 3, text: 'I`m fine'},
+                    {id: 4, text: 'cool'}
+                ],
+            newMessageText: ''
         },
         profilePage: {
             posts: [
@@ -76,7 +83,7 @@ let store = {
         }
     },
 
-    _rerenderEntireTree (state: RootStateType) {
+    callSubscriber(state: RootStateType) {
         console.log('state changed')
     },
 
@@ -84,19 +91,28 @@ let store = {
         return this._state
     },
 
-    addPost ()  {
-        this._state.profilePage.posts.push({post: this._state.profilePage.newPostText, likes: 0})
-        this._state.profilePage.newPostText = ''
-        this._rerenderEntireTree(this._state);
+    // addPost ()  {
+    //     this._state.profilePage.posts.push({post: this._state.profilePage.newPostText, likes: 0})
+    //     this._state.profilePage.newPostText = ''
+    //     this._rerenderEntireTree(this._state);
+    // },
+    //
+    // updateNewPostText (text: string) {
+    //     this._state.profilePage.newPostText = text
+    //     this._rerenderEntireTree(this._state);
+    // },
+
+    subscribe(observer: (state: RootStateType) => void) {
+        this.callSubscriber = observer //наблюдатель // publisher-subscriber
     },
 
-    updateNewPostText (text: string) {
-        this._state.profilePage.newPostText = text
-        this._rerenderEntireTree(this._state);
-    },
+    dispatch(action: ActionType) {
 
-    subscribe (observer: (state: RootStateType)=>void) {
-        this._rerenderEntireTree = observer //наблюдатель // publisher-subscriber
+        sidebarReducer(this._state.sidebar, action)
+        profileReducer(this._state.profilePage, action)
+        dialogsReducer(this._state.dialogsPage, action)
+
+        this.callSubscriber(this._state)
     }
 }
 

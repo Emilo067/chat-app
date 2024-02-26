@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import './App.css';
 import Header from "./layout/header/Header";
 import {Navigate, Route, Routes} from "react-router-dom";
-import {RootStateType} from "./redux/state";
+import {ActionType, RootStateType} from "./redux/state";
 import Navbar from "./layout/navbar/Navbar";
 import Profile from "./layout/content/profile/Profile";
 import Dialogs from "./layout/content/dialogs/Dialogs";
@@ -12,11 +12,10 @@ import {Settings} from "./layout/content/settings/Settings";
 
 type AppPropsType = {
     state: RootStateType
-    addPost: () => void
-    updateNewPostText: (text: string) => void
+    dispatch: (action: ActionType) => void
 }
 
-const App: FC<AppPropsType> = ({state, addPost, updateNewPostText}) => {
+const App: FC<AppPropsType> = ({state, dispatch}) => {
 
     return (
 
@@ -28,8 +27,8 @@ const App: FC<AppPropsType> = ({state, addPost, updateNewPostText}) => {
 
                 <Routes>
                     <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
-                    <Route path={'/profile'} element={<Profile updateNewPostText={updateNewPostText} postData={state.profilePage} addPost={addPost}/>}/>
-                    <Route path={'/dialogs/*'} element={<Dialogs dialogsData={state.dialogsPage}/>}/>
+                    <Route path={'/profile'} element={<Profile dispatch={dispatch} postData={state.profilePage}/>}/>
+                    <Route path={'/dialogs/*'} element={<Dialogs dispatch={dispatch} dialogsData={state.dialogsPage}/>}/>
                     <Route path={'/news'} element={<News/>}/>
                     <Route path={'/music'} element={<Music/>}/>
                     <Route path={'/settings'} element={<Settings/>}/>

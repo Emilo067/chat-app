@@ -2,18 +2,21 @@ import React, {FC, useRef} from 'react';
 import styled from "styled-components";
 import {DialogsItem} from "./dialogsItem/DialogItem";
 import {Message} from "./message/Message";
-import {DialogsPageType} from "../../../redux/state";
+import {ActionType, DialogsPageType} from "../../../redux/state";
+import {addMessageAC, updateNewMessageTextAC} from "../../../redux/dialogs-reducer";
 
 type DialogPropsType = {
     dialogsData: DialogsPageType
+    dispatch: (action: ActionType) => void
 }
 
-const Dialogs: FC<DialogPropsType> = ({dialogsData}) => {
+const Dialogs: FC<DialogPropsType> = ({dialogsData, dispatch}) => {
 
 
     const dialogsItems = dialogsData.dialogs.map(d => {
         return <DialogsItem key={d.id} id={d.id} name={d.name}/>
     })
+
 
     const messages = dialogsData.messages.map(m => {
         return <Message key={m.id} text={m.text}/>
@@ -23,7 +26,19 @@ const Dialogs: FC<DialogPropsType> = ({dialogsData}) => {
 
     const sendMessage = () => {
         if(messageElement.current !== null) {
-            alert(messageElement.current.value)
+            dispatch(addMessageAC())
+        }
+    }
+
+       const onChangeHandler = () => {
+        if (messageElement.current) {
+            dispatch(updateNewMessageTextAC(messageElement.current.value))
+        }
+    }
+
+    const onKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if(e.key === 'Enter') {
+            sendMessage()
         }
     }
 
@@ -36,8 +51,9 @@ const Dialogs: FC<DialogPropsType> = ({dialogsData}) => {
                 {messages}
 
                 <div>
-                    <textarea ref={messageElement} style={{width: "100%", resize: "none"}}/>
-                    <button onClick={sendMessage} style={{display: "block", float: "right"}}>Send</button>
+                    <textarea
+                        onKeyDown={(e) => onKeyPressHandler(e)} onChange={onChangeHandler} ref={messageElement} value={dialogsData.newMessageText} style={{width: "90%", resize: "none"}}/>
+                    <button onClick={sendMessage} style={{display: 'block', float: 'right'}}>Send</button>
                 </div>
             </StyledMessages>
         </StyledDialogs>

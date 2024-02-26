@@ -3,22 +3,21 @@ import styled from "styled-components";
 import MyPosts from "./myPosts/MyPosts";
 import BackgroundImg from "./backgroundImg/BackgroundImg";
 import AvaDescription from "./avaDescription/AvaDescription";
-import {ProfilePageType} from "../../../redux/state";
+import {ActionType, ProfilePageType} from "../../../redux/state";
 
 type ProfilePropsType = {
     postData: ProfilePageType
-    addPost: () => void
-    updateNewPostText: (text: string) => void
+    dispatch: (action: ActionType) => void
 }
 
-const Profile: FC<ProfilePropsType> = ({postData, addPost, updateNewPostText}) => {
+const Profile: FC<ProfilePropsType> = ({postData, dispatch}) => {
 
 
     return (
         <StyledProfile>
             <BackgroundImg/>
             <AvaDescription/>
-            <MyPosts updateNewPostText={updateNewPostText} postData={postData} addPost={addPost}/>
+            <MyPosts dispatch={dispatch} postData={postData}/>
         </StyledProfile>
     );
 };
