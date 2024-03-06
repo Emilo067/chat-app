@@ -10,23 +10,22 @@ import {Settings} from "./layout/content/settings/Settings";
 import DialogsContainer from "./layout/content/dialogs/DialogsContainer";
 
 type AppPropsType = {
-    store: any
-    state: any
+
 }
 
-const App: FC<AppPropsType> = ({store}) => {
+const App: FC<AppPropsType> = ({}) => {
     return (
 
         <div className="app-wrapper">
             <Header/>
-            <Navbar sidebarData={store.getState().sidebar}/>
+            <Navbar/>
 
             <div className={"app-wrapper-content"}>
 
                 <Routes>
                     <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
-                    <Route path={'/profile'} element={<Profile store={store}/>}/>
-                    <Route path={'/dialogs/*'} element={<DialogsContainer store={store}/>}/>
+                    <Route path={'/profile'} element={<Profile/>}/>
+                    <Route path={'/dialogs/*'} element={<DialogsContainer/>}/>
                     <Route path={'/news'} element={<News/>}/>
                     <Route path={'/music'} element={<Music/>}/>
                     <Route path={'/settings'} element={<Settings/>}/>

@@ -5,6 +5,7 @@ import {BrowserRouter} from "react-router-dom";
 import {GlobalStyles} from "./styles/GlobalStyles";
 import App from "./App";
 import React from "react";
+import StoreContext from "./StoreContext";
 
 
 export const rerenderEntireTree = (state: any) => {
@@ -13,7 +14,9 @@ export const rerenderEntireTree = (state: any) => {
     ReactDOM.render(
         <BrowserRouter>
             <GlobalStyles/>
-            <App state={state} store={store}/>
+            <StoreContext.Provider value={store}>
+                <App/>
+            </StoreContext.Provider>
         </BrowserRouter>,
         document.getElementById('root')
     );

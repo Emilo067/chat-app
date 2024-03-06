@@ -5,16 +5,16 @@ import AvaDescription from "./avaDescription/AvaDescription";
 import MyPostsContainer from "./myPosts/MyPostsContainer";
 
 type ProfilePropsType = {
-    store: any
+
 }
 
-const Profile: FC<ProfilePropsType> = ({store}) => {
+const Profile: FC<ProfilePropsType> = () => {
 
     return (
         <StyledProfile>
             <BackgroundImg/>
             <AvaDescription/>
-            <MyPostsContainer store={store}/>
+            <MyPostsContainer/>
         </StyledProfile>
     );
 };

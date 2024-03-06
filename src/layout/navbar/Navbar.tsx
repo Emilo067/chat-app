@@ -3,45 +3,55 @@ import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 import {SidebarType} from "../../redux/store";
 import {Friend} from "./friend/Friend";
+import StoreContext from "../../StoreContext";
 
 type NavbarPropsType = {
-    sidebarData: SidebarType
+    // sidebarData: SidebarType
 }
 
-const Navbar: FC<NavbarPropsType> = ({sidebarData}) => {
+const Navbar: FC<NavbarPropsType> = () => {
 
-    const friendsMap = sidebarData.friends.map((f, i) => {
-        return <Friend key={i} friendsData={f}/>
-    })
+    // const friendsMap = sidebarData.friends.map((f, i) => {
+    //     return <Friend key={i} friendsData={f}/>
+    // })
 
     return (
-        <StyledNavbarContent>
-            <StyledNav>
-                <StyledItem>
-                    <NavLink to={'/profile'}>Profile</NavLink>
-                </StyledItem>
-                <StyledItem>
-                    <NavLink to={'/dialogs'}>Messages</NavLink>
-                </StyledItem>
-                <StyledItem>
-                    <NavLink to={'/news'}>News</NavLink>
-                </StyledItem>
-                <StyledItem>
-                    <NavLink to={'/music'}>Music</NavLink>
-                </StyledItem>
-                <StyledItem>
-                    <NavLink to={'/settings'}>Settings</NavLink>
-                </StyledItem>
-            </StyledNav>
+        <StoreContext.Consumer>
+            {(store)=>{
+                let state = store.getState().sidebar.friends;
 
-            <TitleFriends>Friends</TitleFriends>
-            <StyledFriendsContent>
+                const friendsMap = state.map((f: any, i: any) => {
+                    return <Friend key={i} friendsData={f}/>
+                })
 
-                {friendsMap}
+                return  <StyledNavbarContent>
+                    <StyledNav>
+                        <StyledItem>
+                            <NavLink to={'/profile'}>Profile</NavLink>
+                        </StyledItem>
+                        <StyledItem>
+                            <NavLink to={'/dialogs'}>Messages</NavLink>
+                        </StyledItem>
+                        <StyledItem>
+                            <NavLink to={'/news'}>News</NavLink>
+                        </StyledItem>
+                        <StyledItem>
+                            <NavLink to={'/music'}>Music</NavLink>
+                        </StyledItem>
+                        <StyledItem>
+                            <NavLink to={'/settings'}>Settings</NavLink>
+                        </StyledItem>
+                    </StyledNav>
 
-            </StyledFriendsContent>
-        </StyledNavbarContent>
+                    <TitleFriends>Friends</TitleFriends>
+                    <StyledFriendsContent>
 
+                        {friendsMap}
+
+                    </StyledFriendsContent>
+                </StyledNavbarContent>
+            }}
+    </StoreContext.Consumer>
     );
 };
 
