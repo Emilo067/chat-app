@@ -2,37 +2,37 @@ import React, {FC, useRef} from 'react';
 import styled from "styled-components";
 import {DialogsItem} from "./dialogsItem/DialogItem";
 import {Message} from "./message/Message";
-import {ActionType, DialogsPageType} from "../../../redux/state";
-import {addMessageAC, updateNewMessageTextAC} from "../../../redux/dialogs-reducer";
+import {DialogsPageType} from "../../../redux/store";
 
 type DialogPropsType = {
-    dialogsData: DialogsPageType
-    dispatch: (action: ActionType) => void
+    dialogsPage: DialogsPageType
+    updateNewMessageBody: (message: string) => void
+    sendMessage: ()=>void
 }
 
-const Dialogs: FC<DialogPropsType> = ({dialogsData, dispatch}) => {
+const Dialogs: FC<DialogPropsType> = ({dialogsPage, updateNewMessageBody, sendMessage}) => {
 
 
-    const dialogsItems = dialogsData.dialogs.map(d => {
+    const dialogsItems = dialogsPage.dialogs.map(d => {
         return <DialogsItem key={d.id} id={d.id} name={d.name}/>
     })
 
 
-    const messages = dialogsData.messages.map(m => {
+    const messages = dialogsPage.messages.map(m => {
         return <Message key={m.id} text={m.text}/>
     })
 
     const messageElement = useRef<HTMLTextAreaElement>(null)
 
-    const sendMessage = () => {
+    const onSendMessage = () => {
         if(messageElement.current !== null) {
-            dispatch(addMessageAC())
+            sendMessage()
         }
     }
 
        const onChangeHandler = () => {
         if (messageElement.current) {
-            dispatch(updateNewMessageTextAC(messageElement.current.value))
+            updateNewMessageBody(messageElement.current.value)
         }
     }
 
@@ -52,8 +52,8 @@ const Dialogs: FC<DialogPropsType> = ({dialogsData, dispatch}) => {
 
                 <div>
                     <textarea
-                        onKeyDown={(e) => onKeyPressHandler(e)} onChange={onChangeHandler} ref={messageElement} value={dialogsData.newMessageText} style={{width: "90%", resize: "none"}}/>
-                    <button onClick={sendMessage} style={{display: 'block', float: 'right'}}>Send</button>
+                        onKeyDown={(e) => onKeyPressHandler(e)} onChange={onChangeHandler} ref={messageElement} value={dialogsPage.newMessageText} style={{width: "90%", resize: "none"}}/>
+                    <button onClick={onSendMessage} style={{display: 'block', float: 'right'}}>Send</button>
                 </div>
             </StyledMessages>
         </StyledDialogs>

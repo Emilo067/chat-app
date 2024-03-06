@@ -1,23 +1,20 @@
 import React, {FC} from 'react';
 import styled from "styled-components";
-import MyPosts from "./myPosts/MyPosts";
 import BackgroundImg from "./backgroundImg/BackgroundImg";
 import AvaDescription from "./avaDescription/AvaDescription";
-import {ActionType, ProfilePageType} from "../../../redux/state";
+import MyPostsContainer from "./myPosts/MyPostsContainer";
 
 type ProfilePropsType = {
-    postData: ProfilePageType
-    dispatch: (action: ActionType) => void
+    store: any
 }
 
-const Profile: FC<ProfilePropsType> = ({postData, dispatch}) => {
-
+const Profile: FC<ProfilePropsType> = ({store}) => {
 
     return (
         <StyledProfile>
             <BackgroundImg/>
             <AvaDescription/>
-            <MyPosts dispatch={dispatch} postData={postData}/>
+            <MyPostsContainer store={store}/>
         </StyledProfile>
     );
 };

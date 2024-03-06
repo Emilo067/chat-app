@@ -1,6 +1,15 @@
-import {ActionType, SidebarType} from "./state";
+import {ActionType, SidebarType} from "./store";
+import ava from "../assets/img/avatarkaPost.png";
 
-export const sidebarReducer = (state: SidebarType, action: ActionType): SidebarType => {
+const initialState: SidebarType = {
+    friends: [
+        {name: 'Sasha', img: ava},
+        {name: 'Sveta', img: ava},
+        {name: 'Andrew', img: ava}
+    ]
+}
+
+export const sidebarReducer = (state: SidebarType = initialState, action: ActionType): SidebarType => {
 
 
 

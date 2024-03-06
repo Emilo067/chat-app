@@ -1,12 +1,13 @@
 import React, {FC, useRef} from 'react';
 import styled from "styled-components";
 import Post from "./post/Post";
-import {addPostAC, updateNewPostTextAC} from "../../../../redux/profile-reducer";
-import {ActionType, ProfilePageType} from "../../../../redux/state";
+import {PostType} from "../../../../redux/store";
 
 type MyPostsPropsType = {
-    postData: ProfilePageType
-    dispatch: (action: ActionType) => void
+    updateNewPostText: (text: string) => void
+    addPost: () => void
+    posts: PostType[]
+    newPostText: string
 }
 
 const MyPosts: FC<MyPostsPropsType> = (props: MyPostsPropsType) => {
@@ -15,26 +16,26 @@ const MyPosts: FC<MyPostsPropsType> = (props: MyPostsPropsType) => {
     const newPostElement = useRef<HTMLTextAreaElement>(null)
 
 
-    const addPostHandler = () => {
+    const onAddPost = () => {
         if (newPostElement.current !== null) {
-            props.dispatch(addPostAC())
+            props.addPost()
         }
 
     }
 
-    const onChangeHandler = () => {
+    const onPostChange = () => {
         if (newPostElement.current) {
-            props.dispatch(updateNewPostTextAC(newPostElement.current.value))
+            props.updateNewPostText(newPostElement.current.value)
         }
     }
 
     const onKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter") {
-            addPostHandler()
+            onAddPost()
         }
     }
 
-    const posts = props.postData.posts.map(p => {
+    const posts = props.posts.map(p => {
         return <Post post={p.post} likes={p.likes}/>
     })
 
@@ -42,10 +43,10 @@ const MyPosts: FC<MyPostsPropsType> = (props: MyPostsPropsType) => {
         <StyledMyPosts>
             <h3>My posts</h3>
             <div>
-                <textarea onChange={onChangeHandler} value={props.postData.newPostText} ref={newPostElement}
+                <textarea onChange={onPostChange} value={props.newPostText} ref={newPostElement}
                           onKeyDown={(e)=>onKeyPressHandler(e)}
                           style={{width: "100%", resize: "none"}}/>
-                <button onClick={addPostHandler} style={{display: "block", float: "right"}}>Send</button>
+                <button onClick={onAddPost} style={{display: "block", float: "right"}}>Send</button>
             </div>
 
             {posts}
