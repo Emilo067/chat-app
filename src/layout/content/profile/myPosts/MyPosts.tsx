@@ -1,7 +1,7 @@
 import React, {FC, useRef} from 'react';
 import styled from "styled-components";
 import Post from "./post/Post";
-import {PostType} from "../../../../redux/store";
+import {PostType} from "../../../../redux/profile-reducer";
 
 type MyPostsPropsType = {
     updateNewPostText: (text: string) => void
@@ -35,8 +35,8 @@ const MyPosts: FC<MyPostsPropsType> = (props: MyPostsPropsType) => {
         }
     }
 
-    const posts = props.posts.map(p => {
-        return <Post post={p.post} likes={p.likes}/>
+    const posts = props.posts.map((p,i) => {
+        return <Post key={i} post={p.post} likes={p.likes}/>
     })
 
     return (

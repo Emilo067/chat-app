@@ -1,7 +1,29 @@
-import {ActionType, DialogsPageType} from "./store";
+import {ActionType} from "./store";
 
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT'
 const ADD_MESSAGE = 'ADD-MESSAGE'
+
+export type DialogsDataType = {
+    id: number,
+    name: string
+}
+
+export type MessageType = {
+    id: number,
+    message: string
+}
+
+export type DialogsPageType = {
+    dialogs: DialogsDataType[]
+    messages: MessageType[]
+    newMessageText: string
+}
+
+// export type InitialStateType = {
+//     dialogs: DialogsDataType[]
+//     messages: MessageType[]
+//     newMessageText: string
+// }
 
 const initialState: DialogsPageType = {
     dialogs: [
@@ -12,10 +34,10 @@ const initialState: DialogsPageType = {
     ],
         messages:
     [
-        {id: 1, text: 'Hi'},
-        {id: 2, text: 'How are you?'},
-        {id: 3, text: 'I`m fine'},
-        {id: 4, text: 'cool'}
+        {id: 1, message: 'Hi'},
+        {id: 2, message: 'How are you?'},
+        {id: 3, message: 'I`m fine'},
+        {id: 4, message: 'cool'}
     ],
         newMessageText: ''
 }
@@ -24,7 +46,7 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
     if (action.type === ADD_MESSAGE) {
         state.messages.push({
             id: state.messages.length + 1,
-            text: state.newMessageText
+            message: state.newMessageText
         })
         state.newMessageText = ''
     } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
@@ -35,10 +57,10 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
 }
 
 export type UpdateNewMessageTextACType = ReturnType<typeof updateNewMessageTextAC>
-export type AddMessageACType = ReturnType<typeof addMessageAC>
+export type AddMessageACType = ReturnType<typeof sendMessageAC>
 
 
-export const addMessageAC = () => {
+export const sendMessageAC = () => {
     return {type: ADD_MESSAGE} as const
 }
 

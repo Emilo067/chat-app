@@ -10,15 +10,15 @@ import {Settings} from "./layout/content/settings/Settings";
 import DialogsContainer from "./layout/content/dialogs/DialogsContainer";
 
 type AppPropsType = {
-
+    state: any
 }
 
-const App: FC<AppPropsType> = ({}) => {
+const App: FC<AppPropsType> = ({state}) => {
     return (
 
         <div className="app-wrapper">
             <Header/>
-            <Navbar/>
+            <Navbar sidebarData={state.sidebar}/>
 
             <div className={"app-wrapper-content"}>
 

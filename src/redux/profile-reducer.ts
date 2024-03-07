@@ -1,7 +1,22 @@
-import {ActionType, ProfilePageType} from "./store";
+import {ActionType} from "./store";
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+
+export type PostType = {
+    post: string,
+    likes: number
+}
+
+export type ProfilePageType = {
+    posts: PostType[]
+    newPostText: string
+}
+
+// export type InitialStateType = {
+//     posts: PostType[],
+//     newPostText: string
+// }
 
 const initialState: ProfilePageType = {
         posts: [

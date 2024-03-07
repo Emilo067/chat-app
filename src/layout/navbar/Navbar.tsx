@@ -1,30 +1,20 @@
 import React, {FC} from 'react';
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
-import {SidebarType} from "../../redux/store";
 import {Friend} from "./friend/Friend";
-import StoreContext from "../../StoreContext";
+import {SidebarType} from "../../redux/sidebar-reducer";
 
 type NavbarPropsType = {
-    // sidebarData: SidebarType
+    sidebarData: SidebarType
 }
 
-const Navbar: FC<NavbarPropsType> = () => {
+const Navbar: FC<NavbarPropsType> = ({sidebarData}) => {
 
-    // const friendsMap = sidebarData.friends.map((f, i) => {
-    //     return <Friend key={i} friendsData={f}/>
-    // })
+    const friendsMap = sidebarData.friends.map((f, i) => {
+        return <Friend key={i} friendsData={f}/>
+    })
 
-    return (
-        <StoreContext.Consumer>
-            {(store)=>{
-                let state = store.getState().sidebar.friends;
-
-                const friendsMap = state.map((f: any, i: any) => {
-                    return <Friend key={i} friendsData={f}/>
-                })
-
-                return  <StyledNavbarContent>
+    return (<StyledNavbarContent>
                     <StyledNav>
                         <StyledItem>
                             <NavLink to={'/profile'}>Profile</NavLink>
@@ -50,10 +40,54 @@ const Navbar: FC<NavbarPropsType> = () => {
 
                     </StyledFriendsContent>
                 </StyledNavbarContent>
-            }}
-    </StoreContext.Consumer>
-    );
+);
 };
+
+// const Navbar: FC<NavbarPropsType> = () => {
+//
+//     // const friendsMap = sidebarData.friends.map((f, i) => {
+//     //     return <Friend key={i} friendsData={f}/>
+//     // })
+//
+//     return (
+//         <StoreContext.Consumer>
+//             {(store)=>{
+//                 let state = store.getState().sidebar.friends;
+//
+//                 const friendsMap = state.map((f: any, i: any) => {
+//                     return <Friend key={i} friendsData={f}/>
+//                 })
+//
+//                 return  <StyledNavbarContent>
+//                     <StyledNav>
+//                         <StyledItem>
+//                             <NavLink to={'/profile'}>Profile</NavLink>
+//                         </StyledItem>
+//                         <StyledItem>
+//                             <NavLink to={'/dialogs'}>Messages</NavLink>
+//                         </StyledItem>
+//                         <StyledItem>
+//                             <NavLink to={'/news'}>News</NavLink>
+//                         </StyledItem>
+//                         <StyledItem>
+//                             <NavLink to={'/music'}>Music</NavLink>
+//                         </StyledItem>
+//                         <StyledItem>
+//                             <NavLink to={'/settings'}>Settings</NavLink>
+//                         </StyledItem>
+//                     </StyledNav>
+//
+//                     <TitleFriends>Friends</TitleFriends>
+//                     <StyledFriendsContent>
+//
+//                         {friendsMap}
+//
+//                     </StyledFriendsContent>
+//                 </StyledNavbarContent>
+//             }}
+//     </StoreContext.Consumer>
+//     );
+// };
 
 export default Navbar;
 

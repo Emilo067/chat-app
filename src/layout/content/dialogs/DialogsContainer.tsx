@@ -1,45 +1,72 @@
-import React, {FC} from 'react';
-import {addMessageAC, updateNewMessageTextAC} from "../../../redux/dialogs-reducer";
+import {DialogsPageType, sendMessageAC, updateNewMessageTextAC} from "../../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
-import StoreContext from "../../../StoreContext";
+import {connect} from "react-redux";
+import {AppStateType} from "../../../redux/store-redux";
+import {Dispatch} from "redux";
 
-type DialogPropsType = {
-    // store: any
+// type DialogPropsType = {
+//     // store: any
+// }
+//
+// const DialogsContainer: FC<DialogPropsType> = () => {
+//
+//     // debugger
+//
+//     // const state = store.getState().dialogsPage;
+//     //
+//     // const onSendMessageClick = () => {
+//     //         store.dispatch(addMessageAC())
+//     // }
+//     //
+//     //    const onNewMessageChange = (newMessage: string) => {
+//     //         store.dispatch(updateNewMessageTextAC(newMessage))
+//     // }
+//
+//     return (
+//         <StoreContext.Consumer>
+//             {(store) => {
+//                 const state = store.getState().dialogsPage;
+//
+//                 const onSendMessageClick = () => {
+//                     store.dispatch(addMessageAC())
+//                 }
+//
+//                 const onNewMessageChange = (newMessage: string) => {
+//                     store.dispatch(updateNewMessageTextAC(newMessage))
+//                 }
+//                 return <Dialogs sendMessage={onSendMessageClick}
+//                                 dialogsPage={state}
+//                                 updateNewMessageBody={onNewMessageChange}/>
+//             }}
+//         </StoreContext.Consumer>
+//         )
+//
+// };
+
+
+type mapStateToPropsType = {
+    dialogsPage: DialogsPageType
 }
 
-const DialogsContainer: FC<DialogPropsType> = () => {
+type mapDispatchToPropsType = {
+    updateNewMessageBody: (body: string) => void,
+    sendMessage: () => void
+}
 
-    // debugger
+function mapStateToProps(state: AppStateType): mapStateToPropsType {
+    return {
+        dialogsPage: state.dialogsPage,
+    }
+}
 
-    // const state = store.getState().dialogsPage;
-    //
-    // const onSendMessageClick = () => {
-    //         store.dispatch(addMessageAC())
-    // }
-    //
-    //    const onNewMessageChange = (newMessage: string) => {
-    //         store.dispatch(updateNewMessageTextAC(newMessage))
-    // }
+function mapDispatchToProps(dispatch: Dispatch): mapDispatchToPropsType {
+    return {
+        updateNewMessageBody: (body: string)=>dispatch(updateNewMessageTextAC(body)),
+        sendMessage: ()=>dispatch(sendMessageAC())
+    }
+}
 
-    return (
-        <StoreContext.Consumer>
-            {(store) => {
-                const state = store.getState().dialogsPage;
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
 
-                const onSendMessageClick = () => {
-                    store.dispatch(addMessageAC())
-                }
-
-                const onNewMessageChange = (newMessage: string) => {
-                    store.dispatch(updateNewMessageTextAC(newMessage))
-                }
-                return <Dialogs sendMessage={onSendMessageClick}
-                                dialogsPage={state}
-                                updateNewMessageBody={onNewMessageChange}/>
-            }}
-        </StoreContext.Consumer>
-        )
-
-};
 
 export default DialogsContainer;

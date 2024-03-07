@@ -2,7 +2,7 @@ import React, {FC, useRef} from 'react';
 import styled from "styled-components";
 import {DialogsItem} from "./dialogsItem/DialogItem";
 import {Message} from "./message/Message";
-import {DialogsPageType} from "../../../redux/store";
+import {DialogsPageType} from "../../../redux/dialogs-reducer";
 
 type DialogPropsType = {
     dialogsPage: DialogsPageType
@@ -19,7 +19,7 @@ const Dialogs: FC<DialogPropsType> = ({dialogsPage, updateNewMessageBody, sendMe
 
 
     const messages = dialogsPage.messages.map(m => {
-        return <Message key={m.id} text={m.text}/>
+        return <Message key={m.id} text={m.message}/>
     })
 
     const messageElement = useRef<HTMLTextAreaElement>(null)

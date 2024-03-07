@@ -3,28 +3,27 @@ import {sidebarReducer} from "./sidebar-reducer";
 import {AddPostACType, profileReducer, UpdateNewPostTextACType} from "./profile-reducer";
 import {AddMessageACType, dialogsReducer, UpdateNewMessageTextACType} from "./dialogs-reducer";
 
-
-export type PostType = {
+type PostType = {
     post: string,
     likes: number
 }
 
-export type DialogsDataType = {
+type DialogsDataType = {
     id: number,
     name: string
 }
 
-export type MessageDataType = {
+type MessageDataType = {
     id: number,
-    text: string
+    message: string
 }
 
-export type ProfilePageType = {
+type ProfilePageType = {
     posts: PostType[]
     newPostText: string
 }
 
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: DialogsDataType[]
     messages: MessageDataType[]
     newMessageText: string
@@ -35,7 +34,7 @@ export type FriendsType = {
     img: string
 }
 
-export type SidebarType = {
+type SidebarType = {
     friends: FriendsType[]
 }
 
@@ -48,7 +47,15 @@ export type RootStateType = {
 export type ActionType = AddPostACType | UpdateNewPostTextACType | UpdateNewMessageTextACType | AddMessageACType
 
 
-let store = {
+export type StoreType = {
+    _state: RootStateType
+    _onChange: () => void
+    getState: () => RootStateType
+    subscribe: (observer: () => void) => void
+    dispatch: (action: ActionType) => void
+}
+
+let store: StoreType = {
     _state: {
         dialogsPage: {
             dialogs: [
@@ -59,10 +66,10 @@ let store = {
             ],
             messages:
                 [
-                    {id: 1, text: 'Hi'},
-                    {id: 2, text: 'How are you?'},
-                    {id: 3, text: 'I`m fine'},
-                    {id: 4, text: 'cool'}
+                    {id: 1, message: 'Hi'},
+                    {id: 2, message: 'How are you?'},
+                    {id: 3, message: 'I`m fine'},
+                    {id: 4, message: 'cool'}
                 ],
             newMessageText: ''
         },
@@ -83,7 +90,7 @@ let store = {
         }
     },
 
-    callSubscriber(state: RootStateType) {
+    _onChange() {
         console.log('state changed')
     },
 
@@ -102,8 +109,8 @@ let store = {
     //     this._rerenderEntireTree(this._state);
     // },
 
-    subscribe(observer: (state: RootStateType) => void) {
-        this.callSubscriber = observer //наблюдатель // publisher-subscriber
+    subscribe(observer: () => void) {
+        this._onChange = observer //наблюдатель // publisher-subscriber
     },
 
     dispatch(action: ActionType) {
@@ -112,7 +119,7 @@ let store = {
         profileReducer(this._state.profilePage, action)
         dialogsReducer(this._state.dialogsPage, action)
 
-        this.callSubscriber(this._state)
+        this._onChange()
     }
 }
 

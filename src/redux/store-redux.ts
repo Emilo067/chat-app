@@ -10,6 +10,9 @@ let rootReducer = combineReducers({
     dialogsPage: dialogsReducer
 })
 
+export type AppStateType = ReturnType<typeof rootReducer>
+
+
 let store = createStore(rootReducer)
 
 
