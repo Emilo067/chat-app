@@ -43,17 +43,34 @@ const initialState: DialogsPageType = {
 }
 
 export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionType): DialogsPageType => {
-    if (action.type === ADD_MESSAGE) {
-        state.messages.push({
-            id: state.messages.length + 1,
-            message: state.newMessageText
-        })
-        state.newMessageText = ''
-    } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
-        state.newMessageText = action.newText
+
+    switch (action.type) {
+
+        case UPDATE_NEW_MESSAGE_TEXT:
+            return {
+                ...state,
+                newMessageText: action.newText
+            }
+        case ADD_MESSAGE:
+            return {
+                ...state,
+                messages: [...state.messages, { id: state.messages.length + 1, message:state.newMessageText}],
+                newMessageText: ''
+            }
+        default: return state
     }
 
-    return state
+    // if (action.type === ADD_MESSAGE) {
+    //     state.messages.push({
+    //         id: state.messages.length + 1,
+    //         message: state.newMessageText
+    //     })
+    //     state.newMessageText = ''
+    // } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
+    //     state.newMessageText = action.newText
+    // }
+    //
+    // return state
 }
 
 export type UpdateNewMessageTextACType = ReturnType<typeof updateNewMessageTextAC>

@@ -1,4 +1,4 @@
-import {addPostAC, PostType, updateNewPostTextAC} from "../../../../redux/profile-reducer";
+import {addPostAC, ProfilePageType, updateNewPostTextAC} from "../../../../redux/profile-reducer";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../../redux/store-redux";
@@ -42,8 +42,7 @@ import {Dispatch} from "redux";
 // }
 
 type mapStateToPropsType = {
-    posts: PostType[]
-    newPostText: string
+    profilePageState: ProfilePageType
 }
 
 type mapDispatchToPropsType = {
@@ -53,8 +52,7 @@ type mapDispatchToPropsType = {
 
 function mapStateToProps(state: AppStateType): mapStateToPropsType {
     return {
-        posts: state.profilePage.posts,
-        newPostText: state.profilePage.newPostText
+        profilePageState: state.profilePage
     }
 }
 

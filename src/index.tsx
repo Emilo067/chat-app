@@ -8,19 +8,13 @@ import React from "react";
 import { Provider } from 'react-redux';
 
 
-export const rerenderEntireTree = (state: any) => {
-
 
     ReactDOM.render(
         <BrowserRouter>
             <GlobalStyles/>
             <Provider store={store}>
-                <App state={state}/>
+                <App state={store.getState()}/>
             </Provider>
         </BrowserRouter>,
         document.getElementById('root')
     );
-}
-
-rerenderEntireTree(store.getState())
-store.subscribe(()=>{rerenderEntireTree(store.getState())})
