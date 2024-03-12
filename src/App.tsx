@@ -8,6 +8,7 @@ import {News} from "./layout/content/news/News";
 import {Music} from "./layout/content/music/Music";
 import {Settings} from "./layout/content/settings/Settings";
 import DialogsContainer from "./layout/content/dialogs/DialogsContainer";
+import UsersContainer from "./layout/content/Users/UsersContainer";
 
 type AppPropsType = {
     state: any
@@ -29,6 +30,7 @@ const App: FC<AppPropsType> = ({state}) => {
                     <Route path={'/news'} element={<News/>}/>
                     <Route path={'/music'} element={<Music/>}/>
                     <Route path={'/settings'} element={<Settings/>}/>
+                    <Route path={'/users'} element={<UsersContainer/>}/>
                 </Routes>
 
             </div>

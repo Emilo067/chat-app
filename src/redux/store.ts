@@ -44,7 +44,7 @@ export type RootStateType = {
     sidebar: SidebarType
 }
 
-export type ActionType = AddPostACType | UpdateNewPostTextACType | UpdateNewMessageTextACType | AddMessageACType
+type ActionType = AddPostACType | UpdateNewPostTextACType | UpdateNewMessageTextACType | AddMessageACType
 
 
 export type StoreType = {
@@ -115,9 +115,9 @@ let store: StoreType = {
 
     dispatch(action: ActionType) {
 
-        sidebarReducer(this._state.sidebar, action)
-        profileReducer(this._state.profilePage, action)
-        dialogsReducer(this._state.dialogsPage, action)
+        // sidebarReducer(this._state.sidebar, action)
+        // //profileReducer(this._state.profilePage, action)
+        // dialogsReducer(this._state.dialogsPage, action)
 
         this._onChange()
     }

@@ -1,7 +1,7 @@
-import {ActionType} from "./store";
-
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT'
 const ADD_MESSAGE = 'ADD-MESSAGE'
+
+type ActionType = UpdateNewMessageTextACType | AddMessageACType
 
 export type DialogsDataType = {
     id: number,

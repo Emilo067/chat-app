@@ -1,6 +1,7 @@
-import {ActionType, FriendsType} from "./store";
+import {FriendsType} from "./store";
 import ava from "../assets/img/avatarkaPost.png";
 
+type ActionType = {}
 
 export type SidebarType = {
     friends: FriendsType[]
