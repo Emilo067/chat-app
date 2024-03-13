@@ -11,17 +11,14 @@ type UsersCType = {
 }
 
 class UsersC extends React.Component<UsersCType> {
-   constructor(props: UsersCType) {
-       super(props);
 
-       alert('HELLO')
-
+   componentWillMount() {
        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(res => {
            this.props.setUsers(res.data.items)
        })
    }
 
-   render() {return <>
+    render() {return <>
            <div>
                {this.props.usersPage.map(u => <div key={u.id}>
                 <span>
