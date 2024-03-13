@@ -11,11 +11,11 @@ export type LocationType = {
 
 export type UsersPageType = {
     id: number
-    avatarUrl: string
+    photos: any
     followed: boolean
-    fullName: string
+    name: string
     status: string
-    location: LocationType
+    //location: LocationType
 }
 
 type InitialStateType = {
@@ -23,7 +23,6 @@ type InitialStateType = {
 }
 
 const initialState: InitialStateType = {
-
     users: []
 }
 
