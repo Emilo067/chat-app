@@ -12,13 +12,17 @@ type UsersPropsType = {
 
 export const Users: FC<UsersPropsType> = ({usersPage, follow, unfollow, setUsers}) => {
 
-    if(usersPage.length === 0) {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(res => {
-            setUsers(res.data.items)
-        })
+    const getUsers = () => {
+        if(usersPage.length === 0) {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(res => {
+                setUsers(res.data.items)
+            })
+        }
     }
 
-    return (
+
+    return ( <>
+            <button onClick={getUsers}>GET USERS</button>
         <div>
             {usersPage.map(u => <div key={u.id}>
                 <span>
@@ -42,5 +46,6 @@ export const Users: FC<UsersPropsType> = ({usersPage, follow, unfollow, setUsers
                 </span>
             </div>)}
         </div>
+        </>
     );
 };
