@@ -26,6 +26,9 @@ const Navbar: FC<NavbarPropsType> = ({sidebarData}) => {
                             <NavLink to={'/news'}>News</NavLink>
                         </StyledItem>
                         <StyledItem>
+                            <NavLink to={'/users'}>Users</NavLink>
+                        </StyledItem>
+                        <StyledItem>
                             <NavLink to={'/music'}>Music</NavLink>
                         </StyledItem>
                         <StyledItem>
