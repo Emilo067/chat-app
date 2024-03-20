@@ -3,8 +3,14 @@ const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
+const SET_IS_FETCHING = 'SET_IS_FETCHING'
 
-type ActionType = FollowACType | UnfollowACType | SetUsersACType | SetCurrentPageAC | SetTotalUsersCountAC
+type ActionType = FollowACType
+    | UnfollowACType
+    | SetUsersACType
+    | SetCurrentPageAC
+    | SetTotalUsersCountAC
+    | SetIsFetchingACType
 
 export type LocationType = {
     city: string,
@@ -13,7 +19,10 @@ export type LocationType = {
 
 export type UsersPageType = {
     id: number
-    photos: any
+    photos:  {
+        small: null,
+        large: null
+    },
     followed: boolean
     name: string
     status: string
@@ -25,13 +34,15 @@ type InitialStateType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    fetch: boolean
 }
 
 const initialState: InitialStateType = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    fetch: false
 }
 
 export const usersReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
@@ -62,6 +73,11 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
                 ...state,
                 totalUsersCount: action.count
             }
+        case SET_IS_FETCHING:
+            return {
+                ...state,
+                fetch: action.fetch
+            }
         default:
             return state
     }
@@ -72,6 +88,7 @@ export type UnfollowACType = ReturnType<typeof unfollowAC>
 export type SetUsersACType = ReturnType<typeof setUsersAC>
 export type SetCurrentPageAC = ReturnType<typeof setCurrentPageAC>
 export type SetTotalUsersCountAC = ReturnType<typeof setTotalUsersCountAC>
+export type SetIsFetchingACType = ReturnType<typeof setIsFetchingAC>
 
 
 export const followAC = (userId: number) => {
@@ -92,4 +109,8 @@ export const setCurrentPageAC = (pageNumber: number) => {
 
 export const setTotalUsersCountAC = (count: number) => {
     return {type: SET_TOTAL_USERS_COUNT, count} as const
+}
+
+export const setIsFetchingAC = (fetch: boolean) => {
+    return {type: SET_IS_FETCHING, fetch} as const
 }
