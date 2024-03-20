@@ -2,11 +2,11 @@ import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import {AppStateType} from "../../../redux/store-redux";
 import {
-    followAC,
-    setCurrentPageAC, setIsFetchingAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    unfollowAC,
+    follow,
+    setCurrentPage, setFetchUsers,
+    setTotalUsersCount,
+    setUsers,
+    unfollow,
     UsersPageType
 } from "../../../redux/users-reducer";
 import React from "react";
@@ -73,14 +73,14 @@ type mapStateToPropsType = {
     fetch: boolean
 }
 
-type mapDispatchToPropsType = {
-    follow: (id: number) => void
-    unfollow: (id: number) => void
-    setUsers: (users: UsersPageType[]) => void
-    setCurrentPage: (page: number) => void
-    setTotalUsersCount: (count: number) => void
-    setFetchUsers: (fetch: boolean) => void
-}
+// type mapDispatchToPropsType = {
+//     follow: (id: number) => void
+//     unfollow: (id: number) => void
+//     setUsers: (users: UsersPageType[]) => void
+//     setCurrentPage: (page: number) => void
+//     setTotalUsersCount: (count: number) => void
+//     setFetchUsers: (fetch: boolean) => void
+// }
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
@@ -92,15 +92,22 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     }
 }
 
-const mapStateToDispatch = (dispatch: Dispatch): mapDispatchToPropsType => {
-    return {
-        follow: (id: number) => dispatch(followAC(id)),
-        unfollow: (id: number) => dispatch(unfollowAC(id)),
-        setUsers: (users: UsersPageType[]) => dispatch(setUsersAC(users)),
-        setCurrentPage: (page: number) => dispatch(setCurrentPageAC(page)),
-        setTotalUsersCount: (count: number) => dispatch(setTotalUsersCountAC(count)),
-        setFetchUsers: (fetch: boolean) => dispatch(setIsFetchingAC(fetch))
-    }
-}
+// const mapStateToDispatch = (dispatch: Dispatch): mapDispatchToPropsType => {
+//     return {
+//         follow: (id: number) => dispatch(followAC(id)),
+//         unfollow: (id: number) => dispatch(unfollowAC(id)),
+//         setUsers: (users: UsersPageType[]) => dispatch(setUsersAC(users)),
+//         setCurrentPage: (page: number) => dispatch(setCurrentPageAC(page)),
+//         setTotalUsersCount: (count: number) => dispatch(setTotalUsersCountAC(count)),
+//         setFetchUsers: (fetch: boolean) => dispatch(setIsFetchingAC(fetch))
+//     }
+// }
 
-export default connect(mapStateToProps, mapStateToDispatch)(UsersContainerComponent)
+export default connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    setFetchUsers
+})(UsersContainerComponent)
