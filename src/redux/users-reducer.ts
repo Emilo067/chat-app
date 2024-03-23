@@ -20,8 +20,8 @@ export type LocationType = {
 export type UsersPageType = {
     id: number
     photos:  {
-        small: null,
-        large: null
+        small: string | null,
+        large: string | null
     },
     followed: boolean
     name: string

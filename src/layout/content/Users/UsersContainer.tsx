@@ -1,5 +1,4 @@
 import {connect} from "react-redux";
-import {Dispatch} from "redux";
 import {AppStateType} from "../../../redux/store-redux";
 import {
     follow,
@@ -31,15 +30,15 @@ type UsersContainerType = {
 class UsersContainerComponent extends React.Component<UsersContainerType> {
 
     componentWillMount() {
-        this.props.setFetchUsers(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`).then(res => {
-            this.props.setFetchUsers(false)
-            this.props.setUsers(res.data.items)
-            this.props.setTotalUsersCount(res.data.totalCount)
-        })
+            this.props.setFetchUsers(true)
+            axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`).then(res => {
+                this.props.setFetchUsers(false)
+                this.props.setUsers(res.data.items)
+                this.props.setTotalUsersCount(res.data.totalCount)
+            })
     }
 
-    handler = (page: number) => {
+    onChangeHandler = (page: number) => {
         this.props.setCurrentPage(page)
         this.props.setFetchUsers(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`).then(res => {
@@ -57,7 +56,7 @@ class UsersContainerComponent extends React.Component<UsersContainerType> {
                    follow={this.props.follow}
                    unfollow={this.props.unfollow}
                    totalUsersCount={this.props.totalUsersCount}
-                   onChangePage={this.handler}
+                   onChangePage={this.onChangeHandler}
             />
             }
         </>

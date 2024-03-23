@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import avatarka from "../../../assets/img/avatarkaPost.png";
 import styled from "styled-components";
 import {UsersPageType} from "../../../redux/users-reducer";
+import {NavLink} from "react-router-dom";
 
 type UsersPropsType = {
     follow: (id: number) => void
@@ -29,7 +30,10 @@ export const Users: FC<UsersPropsType> = (props: UsersPropsType) => {
         {props.usersPage.map(u => <div key={u.id}>
                 <span>
                     <div>
-                        <img style={{width: '150px', height:'150px', borderRadius: '70px'}} src={avatarka} alt=""/>
+                        <NavLink to={'/profile/' + u.id}>
+                             <img style={{width: '150px', height:'150px', borderRadius: '70px'}} src={u.photos.small !== null ? u.photos.small : avatarka} alt=""/>
+                        </NavLink>
+
                     </div>
                     <div>
                         {u.followed ? <button onClick={()=>{

@@ -3,12 +3,12 @@ import './App.css';
 import Header from "./layout/header/Header";
 import {Navigate, Route, Routes} from "react-router-dom";
 import Navbar from "./layout/navbar/Navbar";
-import Profile from "./layout/content/profile/Profile";
 import {News} from "./layout/content/news/News";
 import {Music} from "./layout/content/music/Music";
 import {Settings} from "./layout/content/settings/Settings";
 import DialogsContainer from "./layout/content/dialogs/DialogsContainer";
 import UsersContainer from "./layout/content/Users/UsersContainer";
+import ProfileContainer from "./layout/content/profile/ProfileContainer";
 
 type AppPropsType = {
     state: any
@@ -25,7 +25,7 @@ const App: FC<AppPropsType> = ({state}) => {
 
                 <Routes>
                     <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
-                    <Route path={'/profile'} element={<Profile/>}/>
+                    <Route path={'/profile/*'} element={<ProfileContainer/>}/>
                     <Route path={'/dialogs/*'} element={<DialogsContainer/>}/>
                     <Route path={'/news'} element={<News/>}/>
                     <Route path={'/music'} element={<Music/>}/>
