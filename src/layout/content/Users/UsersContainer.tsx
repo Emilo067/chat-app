@@ -30,18 +30,18 @@ type UsersContainerType = {
 class UsersContainerComponent extends React.Component<UsersContainerType> {
 
     componentWillMount() {
-            this.props.setFetchUsers(true)
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`).then(res => {
-                this.props.setFetchUsers(false)
-                this.props.setUsers(res.data.items)
-                this.props.setTotalUsersCount(res.data.totalCount)
-            })
+        this.props.setFetchUsers(true)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`, {withCredentials: true}).then(res => {
+            this.props.setFetchUsers(false)
+            this.props.setUsers(res.data.items)
+            this.props.setTotalUsersCount(res.data.totalCount)
+        })
     }
 
     onChangeHandler = (page: number) => {
         this.props.setCurrentPage(page)
         this.props.setFetchUsers(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`).then(res => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`, {withCredentials: true}).then(res => {
             this.props.setFetchUsers(false)
             this.props.setUsers(res.data.items)
         })
@@ -50,14 +50,14 @@ class UsersContainerComponent extends React.Component<UsersContainerType> {
     render() {
         return <>
             {this.props.fetch ? <Preloader/> :
-            <Users usersPage={this.props.usersPage}
-                   currentPage={this.props.currentPage}
-                   pageSize={this.props.pageSize}
-                   follow={this.props.follow}
-                   unfollow={this.props.unfollow}
-                   totalUsersCount={this.props.totalUsersCount}
-                   onChangePage={this.onChangeHandler}
-            />
+                <Users usersPage={this.props.usersPage}
+                       currentPage={this.props.currentPage}
+                       pageSize={this.props.pageSize}
+                       follow={this.props.follow}
+                       unfollow={this.props.unfollow}
+                       totalUsersCount={this.props.totalUsersCount}
+                       onChangePage={this.onChangeHandler}
+                />
             }
         </>
     }

@@ -19,13 +19,14 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     }
 
     render() {
-        return <Header login={this.props.login}/>
+        return <Header login={this.props.login} />
     }
 }
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        login: state.auth.data.login
+        login: state.auth.data.login,
+        user: state.usersPage.users
     }
 }
 
