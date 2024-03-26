@@ -10,8 +10,8 @@ import {
 } from "../../../redux/users-reducer";
 import React from "react";
 import {Users} from "./Users";
-import axios from "axios";
 import {Preloader} from "../../../components/Preloader/Preloader";
+import {usersApi} from "../../../api/api";
 
 type UsersContainerType = {
     setUsers: (users: UsersPageType[]) => void
@@ -31,7 +31,7 @@ class UsersContainerComponent extends React.Component<UsersContainerType> {
 
     componentWillMount() {
         this.props.setFetchUsers(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`, {withCredentials: true}).then(res => {
+        usersApi.getUsers(this.props.currentPage, this.props.pageSize).then(res => {
             this.props.setFetchUsers(false)
             this.props.setUsers(res.data.items)
             this.props.setTotalUsersCount(res.data.totalCount)
@@ -41,10 +41,11 @@ class UsersContainerComponent extends React.Component<UsersContainerType> {
     onChangeHandler = (page: number) => {
         this.props.setCurrentPage(page)
         this.props.setFetchUsers(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`, {withCredentials: true}).then(res => {
-            this.props.setFetchUsers(false)
-            this.props.setUsers(res.data.items)
-        })
+        usersApi.getUsers(page, this.props.pageSize)
+            .then(res => {
+                this.props.setFetchUsers(false)
+                this.props.setUsers(res.data.items)
+            })
     }
 
     render() {
@@ -72,15 +73,6 @@ type mapStateToPropsType = {
     fetch: boolean
 }
 
-// type mapDispatchToPropsType = {
-//     follow: (id: number) => void
-//     unfollow: (id: number) => void
-//     setUsers: (users: UsersPageType[]) => void
-//     setCurrentPage: (page: number) => void
-//     setTotalUsersCount: (count: number) => void
-//     setFetchUsers: (fetch: boolean) => void
-// }
-
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
         usersPage: state.usersPage.users,
@@ -90,17 +82,6 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
         fetch: state.usersPage.fetch
     }
 }
-
-// const mapStateToDispatch = (dispatch: Dispatch): mapDispatchToPropsType => {
-//     return {
-//         follow: (id: number) => dispatch(followAC(id)),
-//         unfollow: (id: number) => dispatch(unfollowAC(id)),
-//         setUsers: (users: UsersPageType[]) => dispatch(setUsersAC(users)),
-//         setCurrentPage: (page: number) => dispatch(setCurrentPageAC(page)),
-//         setTotalUsersCount: (count: number) => dispatch(setTotalUsersCountAC(count)),
-//         setFetchUsers: (fetch: boolean) => dispatch(setIsFetchingAC(fetch))
-//     }
-// }
 
 export default connect(mapStateToProps, {
     follow,

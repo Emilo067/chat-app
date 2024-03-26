@@ -26,9 +26,8 @@ export const Users: FC<UsersPropsType> = (props: UsersPropsType) => {
     }
 
     return (<div>
-            {pages.map(p => <SelectedPage onClick={() => {
-                props.onChangePage(p)
-            }} isSelected={props.currentPage === p}>{p}</SelectedPage>)}
+            {pages.map(p => <SelectedPage
+                onClick={() => {props.onChangePage(p)}} isSelected={props.currentPage === p}>{p}</SelectedPage>)}
             <div>
                 {props.usersPage.map(u => <div key={u.id}>
                 <span>
