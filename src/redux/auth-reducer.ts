@@ -43,7 +43,9 @@ export const authReducer = (state: InitialStateType = initialState, action: Retu
 export const setAuthData = (data: InitialStateType) => ({type: SET_USER_DATA, data} as const)
 
 export const fetchAuthData = () => (dispatch: Dispatch) => {
+    debugger
     authApi.getAuthData().then((res)=>{
-        dispatch(setAuthData({...res.data, isAuth: res.data.resultCode === 0}));
+        if (res.data.resultCode === 0)
+        dispatch(setAuthData({...res.data, isAuth:true}));
     })
 }

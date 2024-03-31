@@ -8,22 +8,10 @@ import {useParams} from "react-router-dom";
 type ProfileContainerPropsType = {
     getUserProfile: (userId: number) => void
     profile: ProfileType
+    isAuth: boolean
 }
 
-// class ProfileContainer extends React.Component<ProfileContainerPropsType> {
-//
-//     componentWillMount() {
-//         axios.get('https://social-network.samuraijs.com/api/1.0/profile/2').then(res => {
-//             this.props.setUserProfileAC(res.data)
-//         })
-//     }
-//
-//     render() {
-//         return <Profile {...this.props}/>
-//     }
-// }
-
-const ProfileContainer = ({getUserProfile, profile}: ProfileContainerPropsType) => {
+const ProfileContainer = ({getUserProfile, profile, isAuth}: ProfileContainerPropsType) => {
 
     let params = useParams()
 
@@ -35,16 +23,18 @@ const ProfileContainer = ({getUserProfile, profile}: ProfileContainerPropsType) 
         }
     }, []);
 
-    return <Profile profile={profile}/>
+    return <Profile profile={profile} isAuth={isAuth}/>
 }
 
 type MapStateToPropsType = {
     profile: ProfileType
+    isAuth: boolean
 }
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        isAuth: state.auth.isAuth
     }
 }
 

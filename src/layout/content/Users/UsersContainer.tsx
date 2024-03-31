@@ -15,6 +15,7 @@ type UsersContainerType = {
     fetchUsers: (currentPage: number, pageSize: number) => void
     follow: (userId: number) => void
     unfollow: (userId: number) => void
+    isAuth: boolean
 }
 
 class UsersContainerComponent extends React.Component<UsersContainerType> {
@@ -30,7 +31,8 @@ class UsersContainerComponent extends React.Component<UsersContainerType> {
     render() {
         return <>
             {this.props.fetch ? <Preloader/> :
-                <Users usersPage={this.props.usersPage}
+                <Users isAuth={this.props.isAuth}
+                       usersPage={this.props.usersPage}
                        currentPage={this.props.currentPage}
                        pageSize={this.props.pageSize}
                        totalUsersCount={this.props.totalUsersCount}
@@ -52,6 +54,7 @@ type mapStateToPropsType = {
     currentPage: number
     fetch: boolean
     followInProgress: number[]
+    isAuth: boolean
 }
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
@@ -61,7 +64,8 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
         currentPage: state.usersPage.currentPage,
         totalUsersCount: state.usersPage.totalUsersCount,
         fetch: state.usersPage.fetch,
-        followInProgress: state.usersPage.followInProgress
+        followInProgress: state.usersPage.followInProgress,
+        isAuth: state.auth.isAuth
     }
 }
 

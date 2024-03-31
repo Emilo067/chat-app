@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import avatarka from "../../../assets/img/avatarkaPost.png";
 import styled from "styled-components";
 import {UsersPageType} from "../../../redux/users-reducer";
-import {NavLink} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 
 type UsersPropsType = {
     usersPage: UsersPageType[]
@@ -13,6 +13,7 @@ type UsersPropsType = {
     followInProgress: number[]
     follow: (userId: number) => void
     unfollow: (userId: number) => void
+    isAuth: boolean
 }
 
 export const Users: FC<UsersPropsType> = (props: UsersPropsType) => {
@@ -23,6 +24,10 @@ export const Users: FC<UsersPropsType> = (props: UsersPropsType) => {
 
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
+    }
+
+    if(!props.isAuth) {
+        return <Navigate to={"/login"}/>
     }
 
     return (<div>

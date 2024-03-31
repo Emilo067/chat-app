@@ -9,6 +9,7 @@ import DialogsContainer from "./layout/content/dialogs/DialogsContainer";
 import UsersContainer from "./layout/content/Users/UsersContainer";
 import ProfileContainer from "./layout/content/profile/ProfileContainer";
 import HeaderContainer from "./layout/header/HeaderContainer";
+import {Login} from "./components/Login/Login";
 
 type AppPropsType = {
     state: any
@@ -31,6 +32,7 @@ const App: FC<AppPropsType> = ({state}) => {
                     <Route path={'/music'} element={<Music/>}/>
                     <Route path={'/settings'} element={<Settings/>}/>
                     <Route path={'/users'} element={<UsersContainer/>}/>
+                    <Route path={'/login'} element={<Login/>}/>
                 </Routes>
 
             </div>
