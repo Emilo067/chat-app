@@ -4,6 +4,7 @@ const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 const SET_IS_FETCHING = 'SET_IS_FETCHING'
+const SET_FOLLOW_IN_PROGRESS = 'SET-FOLLOW-IN-PROGRESS'
 
 type ActionType = FollowACType
     | UnfollowACType
@@ -11,6 +12,7 @@ type ActionType = FollowACType
     | SetCurrentPageAC
     | SetTotalUsersCountAC
     | SetIsFetchingACType
+    | SetFollowInProgressACType
 
 export type LocationType = {
     city: string,
@@ -19,7 +21,7 @@ export type LocationType = {
 
 export type UsersPageType = {
     id: number
-    photos:  {
+    photos: {
         small: string | null,
         large: string | null
     },
@@ -35,6 +37,7 @@ type InitialStateType = {
     totalUsersCount: number
     currentPage: number
     fetch: boolean
+    followInProgress: number[]
 }
 
 const initialState: InitialStateType = {
@@ -42,7 +45,8 @@ const initialState: InitialStateType = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
-    fetch: false
+    fetch: false,
+    followInProgress: []
 }
 
 export const usersReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
@@ -78,6 +82,13 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
                 ...state,
                 fetch: action.fetch
             }
+        case SET_FOLLOW_IN_PROGRESS:
+            return {
+                ...state,
+                followInProgress: action.followInProgress
+                    ? [...state.followInProgress, action.id]
+                    : state.followInProgress.filter(id => id !== action.id)
+            }
         default:
             return state
     }
@@ -89,6 +100,7 @@ export type SetUsersACType = ReturnType<typeof setUsers>
 export type SetCurrentPageAC = ReturnType<typeof setCurrentPage>
 export type SetTotalUsersCountAC = ReturnType<typeof setTotalUsersCount>
 export type SetIsFetchingACType = ReturnType<typeof setFetchUsers>
+export type SetFollowInProgressACType = ReturnType<typeof setFollowInProgress>
 
 
 export const follow = (userId: number) => {
@@ -113,4 +125,8 @@ export const setTotalUsersCount = (count: number) => {
 
 export const setFetchUsers = (fetch: boolean) => {
     return {type: SET_IS_FETCHING, fetch} as const
+}
+
+export const setFollowInProgress = (id: number, followInProgress: boolean) => {
+    return {type: SET_FOLLOW_IN_PROGRESS, id, followInProgress} as const
 }

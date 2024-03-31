@@ -13,6 +13,8 @@ type UsersPropsType = {
     totalUsersCount: number
     currentPage: number
     onChangePage: (page: number) => void
+    setFollowInProgress: (id: number, isFollow: boolean) => void
+    followInProgress: number[]
 }
 
 export const Users: FC<UsersPropsType> = (props: UsersPropsType) => {
@@ -27,7 +29,9 @@ export const Users: FC<UsersPropsType> = (props: UsersPropsType) => {
 
     return (<div>
             {pages.map(p => <SelectedPage
-                onClick={() => {props.onChangePage(p)}} isSelected={props.currentPage === p}>{p}</SelectedPage>)}
+                onClick={() => {
+                    props.onChangePage(p)
+                }} isSelected={props.currentPage === p}>{p}</SelectedPage>)}
             <div>
                 {props.usersPage.map(u => <div key={u.id}>
                 <span>
@@ -40,19 +44,26 @@ export const Users: FC<UsersPropsType> = (props: UsersPropsType) => {
                     </div>
                     <div>
                         {u.followed
-                            ? <button onClick={() => {
-                                axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {withCredentials: true}).then(res => {
-                                    if (res.data.resultCode === 0) {
-                                        props.unfollow(u.id)
-                                    }
-                                })
-                            }
-                            }>Unfollow</button>
-                            : <button
+                            ? <button
+                                disabled={props.followInProgress.some(us => us === u.id )}
                                 onClick={() => {
+                                    props.setFollowInProgress(u.id, true)
+                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {withCredentials: true}).then(res => {
+                                        if (res.data.resultCode === 0) {
+                                            props.unfollow(u.id)
+                                            props.setFollowInProgress(u.id, false)
+                                        }
+                                    })
+                                }
+                                }>Unfollow</button>
+                            : <button
+                                disabled={props.followInProgress.some(us => us === u.id )}
+                                onClick={() => {
+                                    props.setFollowInProgress(u.id, true)
                                     axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {withCredentials: true}).then(res => {
                                         if (res.data.resultCode === 0) {
                                             props.follow(u.id)
+                                            props.setFollowInProgress(u.id,false)
                                         }
                                     })
                                 }

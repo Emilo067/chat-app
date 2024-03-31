@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/store-redux";
 import {
     follow,
-    setCurrentPage, setFetchUsers,
+    setCurrentPage, setFetchUsers, setFollowInProgress,
     setTotalUsersCount,
     setUsers,
     unfollow,
@@ -17,6 +17,7 @@ type UsersContainerType = {
     setUsers: (users: UsersPageType[]) => void
     setCurrentPage: (pageNumber: number) => void
     setTotalUsersCount: (count: number) => void
+    setFollowInProgress: (id: number, isFollow: boolean) => void
     follow: (id: number) => void
     unfollow: (id: number) => void
     setFetchUsers: (fetch: boolean) => void
@@ -25,6 +26,7 @@ type UsersContainerType = {
     totalUsersCount: number
     currentPage: number
     fetch: boolean
+    followInProgress: number[]
 }
 
 class UsersContainerComponent extends React.Component<UsersContainerType> {
@@ -58,6 +60,8 @@ class UsersContainerComponent extends React.Component<UsersContainerType> {
                        unfollow={this.props.unfollow}
                        totalUsersCount={this.props.totalUsersCount}
                        onChangePage={this.onChangeHandler}
+                       setFollowInProgress={this.props.setFollowInProgress}
+                       followInProgress={this.props.followInProgress}
                 />
             }
         </>
@@ -71,6 +75,7 @@ type mapStateToPropsType = {
     totalUsersCount: number
     currentPage: number
     fetch: boolean
+    followInProgress: number[]
 }
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
@@ -79,7 +84,8 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
         pageSize: state.usersPage.pageSize,
         currentPage: state.usersPage.currentPage,
         totalUsersCount: state.usersPage.totalUsersCount,
-        fetch: state.usersPage.fetch
+        fetch: state.usersPage.fetch,
+        followInProgress: state.usersPage.followInProgress
     }
 }
 
@@ -89,5 +95,6 @@ export default connect(mapStateToProps, {
     setUsers,
     setCurrentPage,
     setTotalUsersCount,
-    setFetchUsers
+    setFetchUsers,
+    setFollowInProgress
 })(UsersContainerComponent)

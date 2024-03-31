@@ -24,3 +24,7 @@ export const profileApi = {
         return instanse.get(`profile/${userId}`)
     }
 }
+
+export const followingAPI = {
+
+}
