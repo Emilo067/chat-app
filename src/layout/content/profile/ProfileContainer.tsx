@@ -1,13 +1,12 @@
 import React, {useEffect} from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {ProfileType, setUserProfileAC} from "../../../redux/profile-reducer";
+import {getUserProfile, ProfileType} from "../../../redux/profile-reducer";
 import {AppStateType} from "../../../redux/store-redux";
 import {useParams} from "react-router-dom";
-import {profileApi} from "../../../api/api";
 
 type ProfileContainerPropsType = {
-    setUserProfileAC: (profile: ProfileType) => void
+    getUserProfile: (userId: number) => void
     profile: ProfileType
 }
 
@@ -24,20 +23,15 @@ type ProfileContainerPropsType = {
 //     }
 // }
 
-const ProfileContainer = ({setUserProfileAC, profile}: ProfileContainerPropsType) => {
+const ProfileContainer = ({getUserProfile, profile}: ProfileContainerPropsType) => {
 
     let params = useParams()
 
     useEffect(() => {
-        debugger
         if(!params.userId) {
-            profileApi.getProfile('2').then(res => {
-                setUserProfileAC(res.data)
-            })
+          getUserProfile(2)
         } else {
-            profileApi.getProfile(params.userId).then(res => {
-                setUserProfileAC(res.data)
-            })
+            getUserProfile(+params.userId)
         }
     }, []);
 
@@ -54,4 +48,4 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export default connect(mapStateToProps, {setUserProfileAC})(ProfileContainer)
+export default connect(mapStateToProps, {getUserProfile})(ProfileContainer)
