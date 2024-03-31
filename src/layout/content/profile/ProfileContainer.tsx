@@ -4,14 +4,14 @@ import {connect} from "react-redux";
 import {getUserProfile, ProfileType} from "../../../redux/profile-reducer";
 import {AppStateType} from "../../../redux/store-redux";
 import {useParams} from "react-router-dom";
+import {WithAuthRedirect} from "../../../hoc/WithAuthRedirect";
 
 type ProfileContainerPropsType = {
     getUserProfile: (userId: number) => void
     profile: ProfileType
-    isAuth: boolean
 }
 
-const ProfileContainer = ({getUserProfile, profile, isAuth}: ProfileContainerPropsType) => {
+const ProfileContainer = ({getUserProfile, profile}: ProfileContainerPropsType) => {
 
     let params = useParams()
 
@@ -23,7 +23,7 @@ const ProfileContainer = ({getUserProfile, profile, isAuth}: ProfileContainerPro
         }
     }, []);
 
-    return <Profile profile={profile} isAuth={isAuth}/>
+    return <Profile profile={profile}/>
 }
 
 type MapStateToPropsType = {
@@ -38,4 +38,4 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export default connect(mapStateToProps, {getUserProfile})(ProfileContainer)
+export default WithAuthRedirect(connect(mapStateToProps, {getUserProfile})(ProfileContainer))

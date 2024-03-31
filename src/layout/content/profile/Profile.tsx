@@ -4,18 +4,12 @@ import BackgroundImg from "./backgroundImg/BackgroundImg";
 import AvaDescription from "./avaDescription/AvaDescription";
 import MyPostsContainer from "./myPosts/MyPostsContainer";
 import {ProfileType} from "../../../redux/profile-reducer";
-import {Navigate} from "react-router-dom";
 
 type ProfilePropsType = {
     profile: ProfileType
-    isAuth: boolean
 }
 
-const Profile: FC<ProfilePropsType> = ({profile, isAuth}) => {
-
-    if(!isAuth) {
-        return <Navigate to={"/login"}/>
-    }
+const Profile: FC<ProfilePropsType> = ({profile}) => {
 
     return (
         <StyledProfile>
