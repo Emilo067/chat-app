@@ -3,7 +3,6 @@ import styled from "styled-components";
 import {DialogsItem} from "./dialogsItem/DialogItem";
 import {Message} from "./message/Message";
 import {DialogsPageType} from "../../../redux/dialogs-reducer";
-import {Navigate} from "react-router-dom";
 
 type DialogPropsType = {
     dialogsPage: DialogsPageType
@@ -42,12 +41,6 @@ const Dialogs: FC<DialogPropsType> = ({dialogsPage, updateNewMessageBody, sendMe
         if(e.key === 'Enter') {
             sendMessage()
         }
-    }
-
-
-    //alert(isAuth)
-    if(!isAuth) {
-        return <Navigate to={"/login"}/>
     }
 
     return (
