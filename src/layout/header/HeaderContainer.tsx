@@ -3,6 +3,7 @@ import Header from "./Header";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/store-redux";
 import {fetchAuthData} from "../../redux/auth-reducer";
+import {compose} from "redux";
 
 type HeaderContainerPropsType = {
     fetchAuthData: () => void
@@ -26,5 +27,6 @@ const mapStateToProps = (state: AppStateType) => {
         user: state.usersPage.users
     }
 }
-
-export default connect(mapStateToProps, {fetchAuthData})(HeaderContainer)
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {fetchAuthData})
+)(HeaderContainer)
