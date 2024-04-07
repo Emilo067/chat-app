@@ -17,7 +17,21 @@ export const usersApi = {
         return instanse.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
     },
     getProfile (userId: number) {
+        console.warn("Is not actuale this method, use please object profileApi")
+        return profileApi.getProfile(userId)
+    }
+}
+
+
+export const profileApi = {
+    getProfile (userId: number) {
         return instanse.get(`profile/${userId}`)
+    },
+    getStatus(userId: number) {
+        return instanse.get(`/profile/status/${userId}`)
+    },
+    updateStatus(status: string) {
+        return instanse.put('/profile/status', {status})
     }
 }
 
