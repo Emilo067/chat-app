@@ -1,7 +1,5 @@
-import {FriendsType} from "./store";
 import ava from "../assets/img/avatarkaPost.png";
-
-type ActionType = {}
+import {FriendsType} from "../common/types";
 
 export type SidebarType = {
     friends: FriendsType[]
@@ -19,7 +17,7 @@ const initialState: initialStateType = {
     ]
 }
 
-export const sidebarReducer = (state: initialStateType = initialState, action: ActionType): initialStateType => {
+export const sidebarReducer = (state: initialStateType = initialState): initialStateType => {
 
 
 

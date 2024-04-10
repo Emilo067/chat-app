@@ -3,13 +3,16 @@ import styled from "styled-components";
 import BackgroundImg from "./backgroundImg/BackgroundImg";
 import AvaDescription from "./avaDescription/AvaDescription";
 import MyPostsContainer from "./myPosts/MyPostsContainer";
-import {ProfileType, updateStatus} from "../../../redux/profile-reducer";
+import {ProfileType} from "../../../redux/profile-reducer";
 
 type ProfilePropsType = {
     profile: ProfileType
     status: string
     updateStatus: (status: string) => void
 }
+
+
+
 
 const Profile: FC<ProfilePropsType> = ({profile, status, updateStatus}) => {
 

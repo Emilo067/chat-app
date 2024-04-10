@@ -1,4 +1,5 @@
 import axios from "axios";
+import {FormDataType} from "../components/Login/Login";
 
 
 const instanse = axios.create({
@@ -38,5 +39,8 @@ export const profileApi = {
 export const authApi = {
     getAuthData () {
         return instanse.get('auth/me')
+    },
+    login(data: FormDataType) {
+        return instanse.post('auth/login', data)
     }
 }

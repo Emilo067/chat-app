@@ -4,7 +4,7 @@ import {fetchUsers, follow, unfollow, UsersPageType} from "../../../redux/users-
 import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../../../components/Preloader/Preloader";
-import {WithAuthRedirect} from "../../../hoc/WithAuthRedirect";
+import {WithAuthRedirect} from "../../../common/hoc/WithAuthRedirect";
 import {compose} from "redux";
 
 type UsersContainerType = {

@@ -1,51 +1,47 @@
-import React, {FC, useRef} from 'react';
+import React, {FC} from 'react';
 import styled from "styled-components";
 import Post from "./post/Post";
-import {PostType, ProfilePageType} from "../../../../redux/profile-reducer";
+import {ProfilePageType} from "../../../../redux/profile-reducer";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
 type MyPostsPropsType = {
-    updateNewPostText: (text: string) => void
-    addPost: () => void
+    addPost: (updateNewPost:string) => void
     profilePageState: ProfilePageType
 }
 
+type FormPost = {
+    updateNewPost: string
+}
+
+const PostForm: React.FC<InjectedFormProps<FormPost>> = (props) => {
+    return <>
+        <form onSubmit={props.handleSubmit}>
+            <Field component={"textarea"} name={"updateNewPost"}
+                   style={{width: "100%", resize: "none"}}/>
+            <button style={{display: "block", float: "right"}}>Send</button>
+        </form>
+    </>
+}
+
+const PostReduxForm = reduxForm<FormPost>({
+    form: 'post'
+})(PostForm)
+
 const MyPosts: FC<MyPostsPropsType> = (props: MyPostsPropsType) => {
-
-
-    const newPostElement = useRef<HTMLTextAreaElement>(null)
-
-
-    const onAddPost = () => {
-        if (newPostElement.current !== null) {
-            props.addPost()
-        }
-
-    }
-
-    const onPostChange = () => {
-        if (newPostElement.current) {
-            props.updateNewPostText(newPostElement.current.value)
-        }
-    }
-
-    const onKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === "Enter") {
-            onAddPost()
-        }
-    }
 
     const posts = props.profilePageState.posts.map((p,i) => {
         return <Post key={i} post={p.post} likes={p.likes}/>
     })
 
+    const onHandleSubmit = ({updateNewPost}: FormPost) => {
+        props.addPost(updateNewPost)
+    }
+
     return (
         <StyledMyPosts>
             <h3>My posts</h3>
             <div>
-                <textarea onChange={onPostChange} value={props.profilePageState.newPostText} ref={newPostElement}
-                          onKeyDown={(e)=>onKeyPressHandler(e)}
-                          style={{width: "100%", resize: "none"}}/>
-                <button onClick={onAddPost} style={{display: "block", float: "right"}}>Send</button>
+                <PostReduxForm onSubmit={onHandleSubmit}/>
             </div>
 
             {posts}

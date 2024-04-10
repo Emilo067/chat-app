@@ -1,17 +1,33 @@
-import React, {FC, useRef} from 'react';
+import React, {FC} from 'react';
 import styled from "styled-components";
 import {DialogsItem} from "./dialogsItem/DialogItem";
 import {Message} from "./message/Message";
 import {DialogsPageType} from "../../../redux/dialogs-reducer";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
 type DialogPropsType = {
     dialogsPage: DialogsPageType
-    updateNewMessageBody: (message: string) => void
-    sendMessage: ()=>void
-    isAuth: boolean
+    sendMessage: (newMessage: string) => void
 }
 
-const Dialogs: FC<DialogPropsType> = ({dialogsPage, updateNewMessageBody, sendMessage, isAuth}) => {
+type FormDialogType = {
+    updateNewMessageBody: string
+}
+
+const FormDialog: React.FC<InjectedFormProps<FormDialogType>> = (props) => {
+    return <form onSubmit={props.handleSubmit}>
+        <Field component={"textarea"}
+               name={"updateNewMessageBody"}
+               style={{width: "90%", resize: "none"}}/>
+        <button style={{display: 'block', float: 'right'}}>Send</button>
+    </form>
+}
+
+const FormReduxDialog = reduxForm<FormDialogType>({
+    form: "dialog"
+})(FormDialog)
+
+const Dialogs: FC<DialogPropsType> = ({dialogsPage, sendMessage}) => {
 
 
     const dialogsItems = dialogsPage.dialogs.map(d => {
@@ -22,25 +38,8 @@ const Dialogs: FC<DialogPropsType> = ({dialogsPage, updateNewMessageBody, sendMe
     const messages = dialogsPage.messages.map(m => {
         return <Message key={m.id} text={m.message}/>
     })
-
-    const messageElement = useRef<HTMLTextAreaElement>(null)
-
-    const onSendMessage = () => {
-        if(messageElement.current !== null) {
-            sendMessage()
-        }
-    }
-
-       const onChangeHandler = () => {
-        if (messageElement.current) {
-            updateNewMessageBody(messageElement.current.value)
-        }
-    }
-
-    const onKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if(e.key === 'Enter') {
-            sendMessage()
-        }
+    const onSendMessage = (formValues: FormDialogType) => {
+       sendMessage(formValues.updateNewMessageBody)
     }
 
     return (
@@ -50,11 +49,8 @@ const Dialogs: FC<DialogPropsType> = ({dialogsPage, updateNewMessageBody, sendMe
             </StyledDialogsNames>
             <StyledMessages>
                 {messages}
-
                 <div>
-                    <textarea
-                        onKeyDown={(e) => onKeyPressHandler(e)} onChange={onChangeHandler} ref={messageElement} value={dialogsPage.newMessageText} style={{width: "90%", resize: "none"}}/>
-                    <button onClick={onSendMessage} style={{display: 'block', float: 'right'}}>Send</button>
+                    <FormReduxDialog onSubmit={onSendMessage}/>
                 </div>
             </StyledMessages>
         </StyledDialogs>
@@ -71,9 +67,8 @@ const StyledDialogs = styled.div`
 
 const StyledDialogsNames = styled.div`
   width: 250px;
-    border-right: 1px solid gray;
+  border-right: 1px solid gray;
 `
-
 
 
 const StyledMessages = styled.div`

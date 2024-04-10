@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {getProfileStatus, getUserProfile, ProfileType, updateStatus} from "../../../redux/profile-reducer";
 import {AppStateType} from "../../../redux/store-redux";
 import {useParams} from "react-router-dom";
-import {WithAuthRedirect} from "../../../hoc/WithAuthRedirect";
+import {WithAuthRedirect} from "../../../common/hoc/WithAuthRedirect";
 import {compose} from "redux";
 
 type ProfileContainerPropsType = {
@@ -21,8 +21,8 @@ const ProfileContainer = ({getUserProfile, profile, status, getProfileStatus, up
 
     useEffect(() => {
         if (!params.userId) {
-            getUserProfile(2)
-            getProfileStatus(2)
+            getUserProfile(30298)
+            getProfileStatus(30298)
         } else {
             getUserProfile(+params.userId)
             getProfileStatus(+params.userId)

@@ -33,6 +33,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Retu
                 ...action.data,
                 isAuth: true
             }
+            
         default:
             return state
     }

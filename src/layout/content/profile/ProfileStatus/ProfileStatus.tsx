@@ -24,13 +24,22 @@ export class ProfileStatus extends React.Component<ProfileStatusProps> {
         this.setState({status: e.currentTarget.value})
     }
 
+    componentDidUpdate(prevProps: Readonly<ProfileStatusProps>, prevState: Readonly<{}>, snapshot?: any) {
+        //debugger
+        if(prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
+    }
+
     render() {
         console.log(this.state)
         return (
             this.state.editMode ? <div onBlur={() => {
                     this.setState({editMode: false})
                 }}><input onChange={this.onChangeHandler} value={this.state.status} onBlur={this.deactivateEditMode} autoFocus={true} type="text"/></div> :
-                <div onDoubleClick={this.activateEditMode}>{this.props.status}</div>
+                <div onDoubleClick={this.activateEditMode}>{this.props.status || "--------"}</div>
         );
     }
 

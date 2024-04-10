@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import styled from "styled-components";
-import {FriendsType} from "../../../redux/store";
 import {Avatar} from "../../../components/avatar/Avatar";
+import {FriendsType} from "../../../common/types";
 
 type FriendPropsType = {
     friendsData: FriendsType
