@@ -1,5 +1,5 @@
 import axios from "axios";
-import {FormDataType} from "../components/Login/Login";
+import {FormDataType} from "../common/components/Login/Login";
 
 
 const instanse = axios.create({

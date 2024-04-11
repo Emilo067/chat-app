@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import styled from "styled-components";
-import {Avatar} from "../../../components/avatar/Avatar";
-import {FriendsType} from "../../../common/types";
+import {Avatar} from "../../../common/components/avatar/Avatar";
+import {FriendsType} from "../../../common/types/types";
 
 type FriendPropsType = {
     friendsData: FriendsType

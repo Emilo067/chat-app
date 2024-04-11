@@ -3,7 +3,7 @@ import {AppStateType} from "../../../redux/store-redux";
 import {fetchUsers, follow, unfollow, UsersPageType} from "../../../redux/users-reducer";
 import React from "react";
 import {Users} from "./Users";
-import {Preloader} from "../../../components/Preloader/Preloader";
+import {Preloader} from "../../../common/components/Preloader/Preloader";
 import {WithAuthRedirect} from "../../../common/hoc/WithAuthRedirect";
 import {compose} from "redux";
 

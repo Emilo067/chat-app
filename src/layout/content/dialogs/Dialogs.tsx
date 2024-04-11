@@ -4,6 +4,8 @@ import {DialogsItem} from "./dialogsItem/DialogItem";
 import {Message} from "./message/Message";
 import {DialogsPageType} from "../../../redux/dialogs-reducer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {maxLength, required} from "../../../common/utils/validators";
+import {FormControl} from "../../../common/components/FormsControls/FormsControls";
 
 type DialogPropsType = {
     dialogsPage: DialogsPageType
@@ -14,11 +16,17 @@ type FormDialogType = {
     updateNewMessageBody: string
 }
 
+const maxLength100 = maxLength(100)
+
 const FormDialog: React.FC<InjectedFormProps<FormDialogType>> = (props) => {
+
     return <form onSubmit={props.handleSubmit}>
-        <Field component={"textarea"}
+        <Field component={FormControl}
+               tagName="input"
                name={"updateNewMessageBody"}
-               style={{width: "90%", resize: "none"}}/>
+               validate={[required, maxLength100]}
+               placeholder={"Enter your message"}
+        />
         <button style={{display: 'block', float: 'right'}}>Send</button>
     </form>
 }
@@ -39,7 +47,7 @@ const Dialogs: FC<DialogPropsType> = ({dialogsPage, sendMessage}) => {
         return <Message key={m.id} text={m.message}/>
     })
     const onSendMessage = (formValues: FormDialogType) => {
-       sendMessage(formValues.updateNewMessageBody)
+        sendMessage(formValues.updateNewMessageBody)
     }
 
     return (

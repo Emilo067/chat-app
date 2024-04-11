@@ -4,7 +4,7 @@ import {ProfileType} from "../../../../redux/profile-reducer";
 import avatarka from "../../../../assets/img/avatarkaPost.png";
 import check from "../../../../assets/img/check.png";
 import cross from "../../../../assets/img/cross.png";
-import {Preloader} from "../../../../components/Preloader/Preloader";
+import {Preloader} from "../../../../common/components/Preloader/Preloader";
 import {ProfileStatus} from "../ProfileStatus/ProfileStatus";
 
 

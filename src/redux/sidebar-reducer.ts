@@ -1,5 +1,5 @@
 import ava from "../assets/img/avatarkaPost.png";
-import {FriendsType} from "../common/types";
+import {FriendsType} from "../common/types/types";
 
 export type SidebarType = {
     friends: FriendsType[]
