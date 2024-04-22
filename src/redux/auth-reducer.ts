@@ -57,22 +57,18 @@ export const login = (email: string, password: string, rememberMe: boolean) =>  
         if(res.data.resultCode === ResultCode.success) {
             dispatch(fetchAuthData())
         } else {
-            if(res.data.messages.length) {
-                dispatch(stopSubmit('login', {_error: res.data.messages[0]}))
-            } else {
-                dispatch(stopSubmit('login', {_error: 'Some Error'}))
+            let message = res.data.messages.length > 0 ? res.data.messages[0] : "Some error"
+                dispatch(stopSubmit('login', {_error: message}))
             }
-        }
-    } catch (err: any) {
+        } catch (err: any) {
         throw new Error(err)
     }
 }
 
-export const logout = (email: string, password: string, rememberMe: boolean) =>  async(dispatch: Dispatch | any) => {
+export const logout = () =>  async(dispatch: Dispatch) => {
     try {
         const res = await authApi.logout()
         if(res.data.resultCode === ResultCode.success) {
-            dispatch(fetchAuthData())
             dispatch(setAuthData(null, null, null, false))
         }
     } catch (err: any) {
