@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import styled from "styled-components";
-import {Avatar} from "../../../../../common/components/avatar/Avatar";
+import {Avatar} from "../../../../../common/components/Avatar/Avatar";
 import ava from '../../../../../assets/img/avatarkaPost.png'
 
 

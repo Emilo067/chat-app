@@ -61,12 +61,12 @@ type mapStateToPropsType = {
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
-        usersPage: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        currentPage: state.usersPage.currentPage,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        fetch: state.usersPage.fetch,
-        followInProgress: state.usersPage.followInProgress,
+        usersPage: state.users.users,
+        pageSize: state.users.pageSize,
+        currentPage: state.users.currentPage,
+        totalUsersCount: state.users.totalUsersCount,
+        fetch: state.users.fetch,
+        followInProgress: state.users.followInProgress,
         isAuth: state.auth.isAuth
     }
 }

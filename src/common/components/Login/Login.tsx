@@ -1,24 +1,30 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {FormControl} from "../FormsControls/FormsControls";
+import {maxLength, required} from "../../utils/validators";
+import {Navigate} from "react-router-dom";
 
 export type FormDataType = {
     password: string
-    login: string
+    email: string
     rememberMe: boolean
 }
+
+const maxLength130 = maxLength(30)
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field name={'login'} placeholder={"login"} component={'input'}/>
+                <Field name={'email'} placeholder={"Email"} component={FormControl} tagName="input" validate={[required,maxLength130]}/>
             </div>
             <div>
-                <Field type="password" placeholder={"password"} name={'password'} component={"input"}/>
+                <Field type="password" placeholder={"Password"} name={'password'} component={"input"}/>
             </div>
             <div>
                 <Field type={"checkbox"} name={'rememberMe'} component={"input"}/> remember me
             </div>
+            {props.error && <div style={{color: "red"}}>{props.error}</div>}
             <button>Login</button>
         </form>
     )
@@ -29,10 +35,19 @@ const LoginReduxForm = reduxForm<FormDataType>({
     }
 )(LoginForm)
 
-export const Login = () => {
+type LoginPropsType = {
+    login: (email: string, password: string, rememberMe: boolean) => void,
+    isAuth: boolean
+}
+
+ export const Login = ({login, isAuth}: LoginPropsType) => {
 
     const onSubmit = (formData: FormDataType) => {
-        alert(JSON.stringify(formData, null, 2))
+        login(formData.email, formData.password, formData.rememberMe)
+    }
+
+    if(isAuth) {
+        return <Navigate to={"/profile"}/>
     }
 
     return (<>
@@ -41,3 +56,4 @@ export const Login = () => {
         </>
     );
 };
+

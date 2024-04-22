@@ -9,7 +9,7 @@ type Avatar = {
 
 export const Avatar: FC<Avatar> = ({width, height, img}) => {
     return (
-        <StyledUserAvatar src={img} alt={'user avatar'} img={img} height={height} width={width}/>
+        <StyledUserAvatar src={img} alt={'user Avatar'} img={img} height={height} width={width}/>
     );
 };
 

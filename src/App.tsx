@@ -9,7 +9,7 @@ import DialogsContainer from "./layout/content/dialogs/DialogsContainer";
 import UsersContainer from "./layout/content/Users/UsersContainer";
 import ProfileContainer from "./layout/content/profile/ProfileContainer";
 import HeaderContainer from "./layout/header/HeaderContainer";
-import {Login} from "./common/components/Login/Login";
+import Login from "./common/components/Login/LoginContainer";
 
 type AppPropsType = {
     state: any
