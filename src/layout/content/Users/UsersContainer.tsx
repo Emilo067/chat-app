@@ -4,7 +4,6 @@ import {fetchUsers, follow, unfollow, UsersPageType} from "../../../redux/users-
 import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../../../common/components/Preloader/Preloader";
-import {WithAuthRedirect} from "../../../common/hoc/WithAuthRedirect";
 import {compose} from "redux";
 
 type UsersContainerType = {
@@ -77,6 +76,5 @@ export default compose<React.ComponentType>(
         fetchUsers,
         follow,
         unfollow
-    }),
-    WithAuthRedirect
+    })
 )(UsersContainerComponent)

@@ -13,20 +13,24 @@ type ProfileContainerPropsType = {
     updateStatus: (status: string) => void
     profile: ProfileType
     status: string
+    userId: number | null
 }
 
-const ProfileContainer = ({getUserProfile, profile, status, getProfileStatus, updateStatus}: ProfileContainerPropsType) => {
+const ProfileContainer = ({getUserProfile, profile, status, getProfileStatus, updateStatus, userId}: ProfileContainerPropsType) => {
 
     let params = useParams()
 
     useEffect(() => {
         if (!params.userId) {
-            getUserProfile(30298)
-            getProfileStatus(30298)
+            if(userId) {
+                getUserProfile(userId)
+                getProfileStatus(userId)
+            }
         } else {
             getUserProfile(+params.userId)
             getProfileStatus(+params.userId)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return <Profile profile={profile} status={status} updateStatus={updateStatus}/>
@@ -36,13 +40,15 @@ type MapStateToPropsType = {
     profile: ProfileType
     isAuth: boolean
     status: string
+    userId: number | null
 }
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
         isAuth: state.auth.isAuth,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        userId: state.auth.id
     }
 }
 

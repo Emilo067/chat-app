@@ -66,6 +66,7 @@ export const login = (email: string, password: string, rememberMe: boolean) =>  
 }
 
 export const logout = () =>  async(dispatch: Dispatch) => {
+    debugger
     try {
         const res = await authApi.logout()
         if(res.data.resultCode === ResultCode.success) {

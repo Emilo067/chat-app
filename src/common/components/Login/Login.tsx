@@ -1,7 +1,7 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {FormControl} from "../FormsControls/FormsControls";
-import {maxLength, required} from "../../utils/validators";
+import {required} from "../../utils/validators";
 import {Navigate} from "react-router-dom";
 
 export type FormDataType = {

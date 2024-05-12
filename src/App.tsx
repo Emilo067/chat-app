@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import './App.css';
 import {Navigate, Route, Routes} from "react-router-dom";
 import Navbar from "./layout/navbar/Navbar";
@@ -10,36 +10,67 @@ import UsersContainer from "./layout/content/Users/UsersContainer";
 import ProfileContainer from "./layout/content/profile/ProfileContainer";
 import HeaderContainer from "./layout/header/HeaderContainer";
 import Login from "./common/components/Login/LoginContainer";
+import {connect} from "react-redux";
+import {AppStateType} from "./redux/store-redux";
+import {initializeApp} from "./redux/app-reducer";
+import {Preloader} from "./common/components/Preloader/Preloader";
 
 type AppPropsType = {
     state: any
+    initializeApp?: ()=>void
+    initialized: boolean
 }
 
-const App: FC<AppPropsType> = ({state}) => {
-    return (
+class App extends React.Component<AppPropsType> {
 
-        <div className="app-wrapper">
-            <HeaderContainer/>
-            <Navbar sidebarData={state.sidebar}/>
+    componentWillMount() {
+        if(this.props.initializeApp) {
+            this.props.initializeApp()
+        }
+    }
 
-            <div className={"app-wrapper-content"}>
-                <Routes>
-                    <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
-                    <Route path={'/profile/:userId?'} element={<ProfileContainer/>}/>
-                    <Route path={'/dialogs/*'} element={<DialogsContainer/>}/>
-                    <Route path={'/news'} element={<News/>}/>
-                    <Route path={'/music'} element={<Music/>}/>
-                    <Route path={'/settings'} element={<Settings/>}/>
-                    <Route path={'/users'} element={<UsersContainer/>}/>
-                    <Route path={'/login'} element={<Login/>}/>
-                </Routes>
+    render() {
+        let {state} = this.props;
+
+        if(!this.props.initialized) {
+            return <Preloader/>
+        }
+
+
+        return (
+
+            <div className="app-wrapper">
+                <HeaderContainer/>
+                <Navbar sidebarData={state.sidebar}/>
+
+                <div className={"app-wrapper-content"}>
+                    <Routes>
+                        <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
+                        <Route path={'/profile/:userId?'} element={<ProfileContainer/>}/>
+                        <Route path={'/dialogs/*'} element={<DialogsContainer/>}/>
+                        <Route path={'/news'} element={<News/>}/>
+                        <Route path={'/music'} element={<Music/>}/>
+                        <Route path={'/settings'} element={<Settings/>}/>
+                        <Route path={'/users'} element={<UsersContainer/>}/>
+                        <Route path={'/login'} element={<Login/>}/>
+                    </Routes>
+
+                </div>
 
             </div>
 
-        </div>
-
-    );
+        );
+    }
 }
 
+type MapStateToProps = {
+    initialized: boolean
+}
 
-export default App;
+const mapStateToProps = (state: AppStateType): MapStateToProps => {
+    return {
+        initialized: state.app.initialized
+    }
+}
+
+export default connect(mapStateToProps, {initializeApp})(App);
