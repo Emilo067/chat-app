@@ -1,10 +1,12 @@
 import axios from "axios";
-import {FormDataType} from "../common/components/Login/Login";
 
 
 const instanse = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0',
-    withCredentials: true
+    withCredentials: true,
+    headers:     {
+        "API-KEY": "845a7512-7ea3-4d78-b9e5-2066f67a35cc"
+    }
 })
 
 export const usersApi = {

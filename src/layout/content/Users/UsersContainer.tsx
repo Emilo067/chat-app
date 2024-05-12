@@ -5,6 +5,15 @@ import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../../../common/components/Preloader/Preloader";
 import {compose} from "redux";
+import {
+    getCurrentPage,
+    getFetch,
+    getFollowInProgress,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../../redux/users-selectors";
+import {getIsAuth} from "../../../redux/auth-selectors";
 
 type UsersContainerType = {
     usersPage: UsersPageType[]
@@ -58,15 +67,27 @@ type mapStateToPropsType = {
     isAuth: boolean
 }
 
+// const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
+//     return {
+//         usersPage: state.users.users,
+//         pageSize: state.users.pageSize,
+//         currentPage: state.users.currentPage,
+//         totalUsersCount: state.users.totalUsersCount,
+//         fetch: state.users.fetch,
+//         followInProgress: state.users.followInProgress,
+//         isAuth: state.auth.isAuth
+//     }
+// }
+
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
-        usersPage: state.users.users,
-        pageSize: state.users.pageSize,
-        currentPage: state.users.currentPage,
-        totalUsersCount: state.users.totalUsersCount,
-        fetch: state.users.fetch,
-        followInProgress: state.users.followInProgress,
-        isAuth: state.auth.isAuth
+        usersPage: getUsers(state),
+        pageSize: getPageSize(state),
+        currentPage: getCurrentPage(state),
+        totalUsersCount: getTotalUsersCount(state),
+        fetch: getFetch(state),
+        followInProgress: getFollowInProgress(state),
+        isAuth: getIsAuth(state)
     }
 }
 
