@@ -5,7 +5,7 @@ import avatarka from "../../../../assets/img/avatarkaPost.png";
 import check from "../../../../assets/img/check.png";
 import cross from "../../../../assets/img/cross.png";
 import {Preloader} from "../../../../common/components/Preloader/Preloader";
-import {ProfileStatus} from "../ProfileStatus/ProfileStatus";
+import {ProfileStatusFC} from "../ProfileStatus/ProfileStatusFC";
 
 
 type AvaDescriptionPropsType = {
@@ -22,7 +22,7 @@ const AvaDescription = ({profile, status, updateStatus}: AvaDescriptionPropsType
     return (
         <StyledAvaDescription>
             <img src={profile.photos.large !== null ? profile.photos.large : avatarka} alt={'photo'}/>
-            <ProfileStatus updateStatus={updateStatus} status={status}/>
+            <ProfileStatusFC updateStatus={updateStatus} status={status}/>
             <div>Full name: {profile.fullName}</div>
             <div>About me: {profile.aboutMe}</div>
             <div>Job: {profile.lookingForAJob ? <img src={check} alt={'check'}/> : <img src={cross} alt={'cross'}/>}</div>
