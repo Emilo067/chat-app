@@ -1,6 +1,6 @@
 import React, {lazy, Suspense} from 'react';
 import './App.css';
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import Navbar from "./layout/navbar/Navbar";
 import HeaderContainer from "./layout/header/HeaderContainer";
 import Login from "./common/components/Login/LoginContainer";
@@ -82,12 +82,12 @@ const mapStateToProps = (state: AppStateType): MapStateToProps => {
 let AppContainer = connect(mapStateToProps, {initializeApp})(App);
 
 const SamuraiJSApp = () => {
-    return <BrowserRouter basename={process.env.PUBLIC_URL}>
+    return <HashRouter basename={process.env.PUBLIC_URL}>
         <GlobalStyles/>
         <Provider store={store}>
             <AppContainer state={store.getState()}/>
         </Provider>
-    </BrowserRouter>
+    </HashRouter>
 }
 
 export default SamuraiJSApp;
