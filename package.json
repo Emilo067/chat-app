@@ -10,7 +10,7 @@
   "resolutions": {
     "caniuse-lite": "*"
   },
-  "homepage": "",
+  "homepage": "https://Emilo067.github.io/samurai-way-main",
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.2",
     "@testing-library/jest-dom": "5.14.1",
@@ -21,7 +21,6 @@
     "axios": "^1.6.7",
     "classnames": "2.3.1",
     "formik": "2.2.9",
-    "gh-pages": "3.2.3",
     "jest": "27.5.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -73,6 +72,7 @@
     "@types/react-router-dom": "5.3.3",
     "@types/react-test-renderer": "17.0.1",
     "@types/redux-form": "^8.3.10",
-    "@types/uuid": "8.3.4"
+    "@types/uuid": "8.3.4",
+    "gh-pages": "^6.1.1"
   }
 }
