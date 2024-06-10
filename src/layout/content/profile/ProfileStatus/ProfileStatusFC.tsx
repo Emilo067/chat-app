@@ -14,8 +14,8 @@ export const ProfileStatusFC: FC<ProfileStatusProps> = (props) => {
     }
 
     const editModeOff = () => {
-        debugger
         setEditMode(false)
+        setStatus(status)
         props.updateStatus(status)
     }
 

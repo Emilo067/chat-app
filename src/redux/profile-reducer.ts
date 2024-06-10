@@ -1,5 +1,6 @@
 import {profileApi, usersApi} from "../api/api";
 import {Dispatch} from "redux";
+import {ResultCode} from "../common/enums/enums";
 
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
@@ -16,7 +17,7 @@ export type PostType = {
 }
 
 export type ProfileType = {
-    aboutMe: string,
+    aboutMe: string | null,
     contacts: {
         facebook: null | string,
         website: null | string,
@@ -89,11 +90,11 @@ export const addPostAC = (newPost: string) => {
     return {type: ADD_POST, newPost} as const
 }
 
-const setUserProfileAC = (profile: ProfileType) => {
+export const setUserProfileAC = (profile: ProfileType) => {
     return {type: SET_USER_PROFILE, profile} as const
 }
 
-const setProfileStatus = (status: string) => ({type: SET_PROFILE_STATUS, status} as const)
+export const setProfileStatus = (status: string) => ({type: SET_PROFILE_STATUS, status} as const)
 
 
 export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
@@ -111,7 +112,7 @@ export const getProfileStatus = (userId: number) => (dispatch: Dispatch) => {
 
 export const updateStatus = (status: string) => (dispatch: Dispatch) => {
     profileApi.updateStatus(status).then(res => {
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === ResultCode.success) {
             dispatch(setProfileStatus(status))
         } else {
             console.warn("ERROR UPDATE STATUS")
