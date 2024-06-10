@@ -82,7 +82,7 @@ const mapStateToProps = (state: AppStateType): MapStateToProps => {
 let AppContainer = connect(mapStateToProps, {initializeApp})(App);
 
 const SamuraiJSApp = () => {
-    return <BrowserRouter>
+    return <BrowserRouter basename={process.env.PUBLIC_URL}>
         <GlobalStyles/>
         <Provider store={store}>
             <AppContainer state={store.getState()}/>
