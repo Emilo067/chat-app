@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {usersApi} from "../api/api";
+import {changeObjectInArray} from "../common/utils/object-helper";
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -45,7 +46,7 @@ type InitialStateType = {
 
 const initialState: InitialStateType = {
     users: [],
-    pageSize: 5,
+    pageSize: 10,
     totalUsersCount: 0,
     currentPage: 1,
     fetch: false,
@@ -58,12 +59,14 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)
+                // users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)
+                users: changeObjectInArray(state.users, action.userId, {followed: true})
             }
         case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u)
+                // users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u)
+                users: changeObjectInArray(state.users, action.userId, {followed: false})
             }
         case SET_USERS:
             return {

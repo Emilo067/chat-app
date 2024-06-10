@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import avatarka from "../../../assets/img/avatarkaPost.png";
-import styled from "styled-components";
 import {UsersPageType} from "../../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
+import {Paginator} from "../../../common/components/Paginator/Paginator";
 
 type UsersPropsType = {
     usersPage: UsersPageType[]
@@ -26,11 +26,9 @@ export const Users: FC<UsersPropsType> = (props: UsersPropsType) => {
         pages.push(i)
     }
 
-    return (<div>
-            {pages.map(p => <SelectedPage
-                onClick={() => {
-                    props.onChangePage(p)
-                }} isSelected={props.currentPage === p}>{p}</SelectedPage>)}
+    return (
+        <div>
+            <Paginator onChangePage={props.onChangePage} portionSize={10}/>
             <div>
                 {props.usersPage.map(u => <div key={u.id}>
                 <span>
@@ -44,16 +42,16 @@ export const Users: FC<UsersPropsType> = (props: UsersPropsType) => {
                     <div>
                         {u.followed
                             ? <button
-                                disabled={props.followInProgress.some(us => us === u.id )}
+                                disabled={props.followInProgress.some(us => us === u.id)}
                                 onClick={() => {
                                     props.unfollow(u.id)
                                     //props.followThunk(u.id)
                                 }
                                 }>Unfollow</button>
                             : <button
-                                disabled={props.followInProgress.some(us => us === u.id )}
+                                disabled={props.followInProgress.some(us => us === u.id)}
                                 onClick={() => {
-                                  props.follow(u.id)
+                                    props.follow(u.id)
                                 }
                                 }>Follow</button>}
                     </div>
@@ -74,10 +72,5 @@ export const Users: FC<UsersPropsType> = (props: UsersPropsType) => {
     );
 };
 
-type SelectedPageProps = {
-    isSelected: boolean;
-};
 
-const SelectedPage = styled.span<SelectedPageProps>`
-  font-weight: ${({isSelected}) => (isSelected ? "bold" : "normal")};
-`;
+
