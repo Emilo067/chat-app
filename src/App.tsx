@@ -1,30 +1,32 @@
-import React from 'react';
+import React, {lazy, Suspense} from 'react';
 import './App.css';
-import {Navigate, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import Navbar from "./layout/navbar/Navbar";
-import {News} from "./layout/content/news/News";
-import {Music} from "./layout/content/music/Music";
-import {Settings} from "./layout/content/settings/Settings";
-import DialogsContainer from "./layout/content/dialogs/DialogsContainer";
-import UsersContainer from "./layout/content/Users/UsersContainer";
-import ProfileContainer from "./layout/content/profile/ProfileContainer";
 import HeaderContainer from "./layout/header/HeaderContainer";
 import Login from "./common/components/Login/LoginContainer";
-import {connect} from "react-redux";
-import {AppStateType} from "./redux/store-redux";
+import {connect, Provider} from "react-redux";
+import store, {AppStateType} from "./redux/store-redux";
 import {initializeApp} from "./redux/app-reducer";
 import {Preloader} from "./common/components/Preloader/Preloader";
+import {GlobalStyles} from "./styles/GlobalStyles";
 
-type AppPropsType = {
+type Props = {
     state: any
-    initializeApp?: ()=>void
+    initializeApp?: () => void
     initialized: boolean
 }
 
-class App extends React.Component<AppPropsType> {
+const DialogsContainer = lazy(() => import('./layout/content/dialogs/DialogsContainer'))
+const ProfileContainer = lazy(() => import('./layout/content/profile/ProfileContainer'))
+const News = lazy(() => import('./layout/content/news/News'))
+const Music = lazy(() => import('./layout/content/music/Music'))
+const Settings = lazy(() => import('./layout/content/settings/Settings'))
+const UsersContainer = lazy(() => import('./layout/content/Users/UsersContainer'))
+
+class App extends React.Component<Props> {
 
     componentWillMount() {
-        if(this.props.initializeApp) {
+        if (this.props.initializeApp) {
             this.props.initializeApp()
         }
     }
@@ -32,7 +34,7 @@ class App extends React.Component<AppPropsType> {
     render() {
         let {state} = this.props;
 
-        if(!this.props.initialized) {
+        if (!this.props.initialized) {
             return <Preloader/>
         }
 
@@ -44,16 +46,20 @@ class App extends React.Component<AppPropsType> {
                 <Navbar sidebarData={state.sidebar}/>
 
                 <div className={"app-wrapper-content"}>
+
+                    <Suspense fallback={<h1 style={{color: 'red'}}>LOADING....</h1>}>
                     <Routes>
                         <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
                         <Route path={'/profile/:userId?'} element={<ProfileContainer/>}/>
-                        <Route path={'/dialogs/*'} element={<DialogsContainer/>}/>
+                        <Route path={'/dialogs/*'}
+                               element={<DialogsContainer/>}/>
                         <Route path={'/news'} element={<News/>}/>
                         <Route path={'/music'} element={<Music/>}/>
                         <Route path={'/settings'} element={<Settings/>}/>
                         <Route path={'/users'} element={<UsersContainer/>}/>
                         <Route path={'/login'} element={<Login/>}/>
                     </Routes>
+                    </Suspense>
 
                 </div>
 
@@ -73,4 +79,15 @@ const mapStateToProps = (state: AppStateType): MapStateToProps => {
     }
 }
 
-export default connect(mapStateToProps, {initializeApp})(App);
+let AppContainer = connect(mapStateToProps, {initializeApp})(App);
+
+const SamuraiJSApp = () => {
+    return <BrowserRouter>
+        <GlobalStyles/>
+        <Provider store={store}>
+            <AppContainer state={store.getState()}/>
+        </Provider>
+    </BrowserRouter>
+}
+
+export default SamuraiJSApp;

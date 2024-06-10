@@ -47,28 +47,30 @@ export const fetchAuthData = () => async (dispatch: Dispatch) => {
             dispatch(setAuthData(id, email, login, true));
         }
     } catch (err) {
-        throw err
+        console.log(err)
     }
 }
 
-export const login = (email: string, password: string, rememberMe: boolean) =>  async(dispatch: Dispatch | any) => {
+export const login = (email: string, password: string, rememberMe: boolean) => async (dispatch: Dispatch | any) => {
     try {
-        const res = await authApi.login(email, password, rememberMe)
-        if(res.data.resultCode === ResultCode.success) {
+        const res = await authApi.login(email, password, rememberMe);
+        debugger
+        if (res.data.resultCode === ResultCode.success) {
             dispatch(fetchAuthData())
         } else {
             let message = res.data.messages.length > 0 ? res.data.messages[0] : "Some error"
-                dispatch(stopSubmit('login', {_error: message}))
-            }
-        } catch (err: any) {
-        throw new Error(err)
+            dispatch(stopSubmit('login', {_error: message}))
+        }
+    } catch (err: any) {
+        debugger
+        console.log(err)
     }
 }
 
-export const logout = () =>  async(dispatch: Dispatch) => {
+export const logout = () => async (dispatch: Dispatch) => {
     try {
         const res = await authApi.logout()
-        if(res.data.resultCode === ResultCode.success) {
+        if (res.data.resultCode === ResultCode.success) {
             dispatch(setAuthData(null, null, null, false))
         }
     } catch (err: any) {
