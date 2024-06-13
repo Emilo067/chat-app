@@ -62,12 +62,11 @@ export const login = (email: string, password: string, rememberMe: boolean) => a
             dispatch(stopSubmit('login', {_error: message}))
         }
     } catch (err: any) {
-        debugger
         console.log(err)
     }
 }
 
-export const logout = () => async (dispatch: Dispatch) => {
+export const logout = () => async (dispatch: Dispatch<ReturnType<typeof setAuthData>>) => {
     try {
         const res = await authApi.logout()
         if (res.data.resultCode === ResultCode.success) {
