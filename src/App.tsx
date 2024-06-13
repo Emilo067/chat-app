@@ -2,7 +2,7 @@ import React, {lazy, Suspense} from 'react';
 import './App.css';
 import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import Navbar from "./layout/navbar/Navbar";
-import HeaderContainer from "./layout/header/HeaderContainer";
+import Header from "./layout/header/Header";
 import Login from "./common/components/Login/LoginContainer";
 import {connect, Provider} from "react-redux";
 import store, {AppStateType} from "./redux/store-redux";
@@ -42,7 +42,7 @@ class App extends React.Component<Props> {
         return (
 
             <div className="app-wrapper">
-                <HeaderContainer/>
+                <Header/>
                 <Navbar sidebarData={state.sidebar}/>
 
                 <div className={"app-wrapper-content"}>
