@@ -13,7 +13,7 @@ import {
     getTotalUsersCount,
     getUsers
 } from "../../../redux/users-selectors";
-import {getIsAuth} from "../../../redux/auth-selectors";
+import {selectIsAuth} from "../../../redux/auth-selectors";
 
 type UsersContainerType = {
     usersPage: UsersPageType[]
@@ -87,7 +87,7 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
         totalUsersCount: getTotalUsersCount(state),
         fetch: getFetch(state),
         followInProgress: getFollowInProgress(state),
-        isAuth: getIsAuth(state)
+        isAuth: selectIsAuth(state)
     }
 }
 
