@@ -5,7 +5,7 @@ import {
     ProfileType,
     setProfileStatus,
     setUserProfileAC
-} from "./profile-reducer";
+} from "../model/profile-reducer";
 
 it('should be post added correctly', () => {
     let action = addPostAC('Test post')

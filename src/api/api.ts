@@ -35,6 +35,12 @@ export const profileApi = {
     },
     updateStatus(status: string) {
         return instanse.put('/profile/status', {status})
+    },
+    updatePhoto(photoFile: any) {
+        debugger
+        const formData = new FormData()
+        formData.append('image', photoFile)
+        return instanse.put('/profile/photo', formData, {headers: {'Content-Type': 'multipart/form-data'}})
     }
 }
 

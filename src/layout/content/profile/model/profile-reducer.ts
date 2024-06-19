@@ -1,15 +1,18 @@
-import {profileApi, usersApi} from "../api/api";
+import {profileApi, usersApi} from "../../../../api/api";
 import {Dispatch} from "redux";
-import {ResultCode} from "../common/enums/enums";
+import {ResultCode} from "../../../../common/enums/enums";
 
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_PROFILE_STATUS = 'SET-PROFILE-STATUS'
+const SET_PROFILE_PHOTO = 'SET-PROFILE-PHOTO'
 
 type ActionType =
     AddPostACType
     | SetUserProfileACType
     | SetProfileStatusACType
+    | SetProfilePhotoACType
+
 
 export type PostType = {
     post: string,
@@ -33,8 +36,8 @@ export type ProfileType = {
     fullName: string,
     userId: number,
     photos: {
-        small: null | string,
-        large: null | string
+        small: string,
+        large: string
     }
 } | null
 
@@ -77,6 +80,15 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
                 ...state,
                 status: action.status
             }
+        case SET_PROFILE_PHOTO:
+            debugger
+            if (state.profile) {
+                return {
+                    ...state,
+                    profile: { ...state.profile, photos: action.photos }
+                };
+            }
+            return state;
         default:
             return state
     }
@@ -85,6 +97,7 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
 export type AddPostACType = ReturnType<typeof addPostAC>
 export type SetUserProfileACType = ReturnType<typeof setUserProfileAC>
 export type SetProfileStatusACType = ReturnType<typeof setProfileStatus>
+export type SetProfilePhotoACType = ReturnType<typeof setProfilePhoto>
 
 export const addPostAC = (newPost: string) => {
     return {type: ADD_POST, newPost} as const
@@ -95,6 +108,7 @@ export const setUserProfileAC = (profile: ProfileType) => {
 }
 
 export const setProfileStatus = (status: string) => ({type: SET_PROFILE_STATUS, status} as const)
+export const setProfilePhoto = (photos: any) => ({type: SET_PROFILE_PHOTO, photos} as const)
 
 
 export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
@@ -116,6 +130,17 @@ export const updateStatus = (status: string) => (dispatch: Dispatch) => {
             dispatch(setProfileStatus(status))
         } else {
             console.warn("ERROR UPDATE STATUS")
+        }
+    })
+}
+
+export const updatePhoto = (file: any) => (dispatch: Dispatch) => {
+    profileApi.updatePhoto(file).then(res => {
+        if (res.data.resultCode === ResultCode.success) {
+            debugger
+            dispatch(setProfilePhoto(res.data.data.photos))
+        } else {
+            console.warn("ERROR UPDATE PHOTO")
         }
     })
 }
