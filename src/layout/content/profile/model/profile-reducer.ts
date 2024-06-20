@@ -20,19 +20,19 @@ export type PostType = {
 }
 
 export type ProfileType = {
-    aboutMe: string | null,
+    aboutMe: string ,
     contacts: {
-        facebook: null | string,
-        website: null | string,
-        vk: null | string,
-        twitter: null | string,
-        instagram: null | string,
-        youtube: null | string,
-        github: null | string,
-        mainLink: null | string
+        facebook:  string,
+        website:  string,
+        vk:  string,
+        twitter:  string,
+        instagram:  string,
+        youtube:  string,
+        github:  string,
+        mainLink:  string
     },
     lookingForAJob: boolean,
-    lookingForAJobDescription: null | string,
+    lookingForAJobDescription:  string,
     fullName: string,
     userId: number,
     photos: {
