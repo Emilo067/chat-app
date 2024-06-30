@@ -1,4 +1,5 @@
 import axios from "axios";
+import {FormProfileData} from "../layout/content/profile/ui/profile/profileSetDataForm/ProfileSetDataForm";
 
 
 const instanse = axios.create({
@@ -41,6 +42,9 @@ export const profileApi = {
         const formData = new FormData()
         formData.append('image', photoFile)
         return instanse.put('/profile/photo', formData, {headers: {'Content-Type': 'multipart/form-data'}})
+    },
+    updateProfile(profile: FormProfileData) {
+      return instanse.put('/profile', profile)
     }
 }
 
@@ -48,10 +52,16 @@ export const authApi = {
     getAuthData () {
         return instanse.get('auth/me')
     },
-    login(email: string, password: string, rememberMe: boolean) {
-        return instanse.post('auth/login', {email, password, rememberMe})
+    login(email: string, password: string, rememberMe: boolean, captcha: string) {
+        return instanse.post('auth/login', {email, password, rememberMe, captcha})
     },
     logout() {
         return instanse.delete('auth/login')
     }
+}
+
+export const securityApi = {
+    getCaptchaURL () {
+        return instanse.get('security/get-captcha-url')
+    },
 }
