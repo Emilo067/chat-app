@@ -8,8 +8,8 @@ import {connect, Provider} from "react-redux";
 import store, {AppStateType} from "../redux/store-redux";
 import {initializeApp} from "../redux/app-reducer";
 import {Preloader} from "../common/components/Preloader/Preloader";
-import {GlobalStyles} from "../styles/GlobalStyles";
-import Profile from "../layout/content/profile/ui/profile";
+import {GlobalStyles} from "./styles/GlobalStyles";
+import Profile from "../layout/content/profile/ui/profile/profile";
 import {ErrorPage} from "../common/components/error-page/error-page";
 
 type Props = {
