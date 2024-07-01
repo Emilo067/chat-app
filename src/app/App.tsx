@@ -11,6 +11,7 @@ import {Preloader} from "../common/components/Preloader/Preloader";
 import {GlobalStyles} from "./styles/GlobalStyles";
 import Profile from "../layout/content/profile/ui/profile/profile";
 import {ErrorPage} from "../common/components/error-page/error-page";
+import MatrixBackground from "../common/components/particle/MatrixBG";
 
 type Props = {
     state: any
@@ -26,10 +27,19 @@ const UsersContainer = lazy(() => import('../layout/content/Users/UsersContainer
 
 class App extends React.Component<Props> {
 
+    catchErrorUnhandledErrors = (promiseRejectionEvent: PromiseRejectionEvent) => {
+        alert('Some error occurred')
+    }
+
     componentWillMount() {
         if (this.props.initializeApp) {
             this.props.initializeApp()
         }
+        window.addEventListener('unhandledrejection',  this.catchErrorUnhandledErrors)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection',  this.catchErrorUnhandledErrors)
     }
 
     render() {
@@ -43,24 +53,25 @@ class App extends React.Component<Props> {
         return (
 
             <div className="app-wrapper">
+                <MatrixBackground timeout={50}/>
                 <Header/>
                 <Navbar sidebarData={state.sidebar}/>
 
                 <div className={"app-wrapper-content"}>
 
                     <Suspense fallback={<h1 style={{color: 'red'}}>LOADING....</h1>}>
-                    <Routes>
-                        <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
-                        <Route path={'/profile/:userId?'} element={<Profile/>}/>
-                        <Route path={'/dialogs/*'}
-                               element={<DialogsContainer/>}/>
-                        <Route path={'/news'} element={<News/>}/>
-                        <Route path={'/music'} element={<Music/>}/>
-                        <Route path={'/settings'} element={<Settings/>}/>
-                        <Route path={'/users'} element={<UsersContainer/>}/>
-                        <Route path={'/login'} element={<Login/>}/>
-                        <Route path={'/*'} element={<ErrorPage/>}/>
-                    </Routes>
+                        <Routes>
+                            <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
+                            <Route path={'/profile/:userId?'} element={<Profile/>}/>
+                            <Route path={'/dialogs/*'}
+                                   element={<DialogsContainer/>}/>
+                            <Route path={'/news'} element={<News/>}/>
+                            <Route path={'/music'} element={<Music/>}/>
+                            <Route path={'/settings'} element={<Settings/>}/>
+                            <Route path={'/users'} element={<UsersContainer/>}/>
+                            <Route path={'/login'} element={<Login/>}/>
+                            <Route path={'/*'} element={<ErrorPage/>}/>
+                        </Routes>
                     </Suspense>
 
                 </div>
@@ -84,7 +95,7 @@ const mapStateToProps = (state: AppStateType): MapStateToProps => {
 let AppContainer = connect(mapStateToProps, {initializeApp})(App);
 
 const SamuraiJSApp = () => {
-    return <HashRouter >
+    return <HashRouter>
         <GlobalStyles/>
         <Provider store={store}>
             <AppContainer state={store.getState()}/>
