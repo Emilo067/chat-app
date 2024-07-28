@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import avatarka from "../../../assets/img/avatarkaPost.png";
-import {UsersPageType} from "../../../redux/users-reducer";
+import {UsersPageType} from "./model/reducer/users-reducer";
 import {NavLink} from "react-router-dom";
 import {Paginator} from "../../../common/components/Paginator/Paginator";
 
