@@ -1,19 +1,17 @@
 import {connect} from "react-redux";
-import {AppStateType} from "../../../redux/store-redux";
-import {fetchUsers, follow, unfollow, UsersPageType} from "../../../redux/users-reducer";
+import {AppStateType} from "../../../app/store/store-redux";
+import {fetchUsers, follow, unfollow, UsersPageType} from "./model/reducer/users-reducer";
 import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../../../common/components/Preloader/Preloader";
 import {compose} from "redux";
-import {
-    getCurrentPage,
-    getFetch,
-    getFollowInProgress,
-    getPageSize,
-    getTotalUsersCount,
-    getUsers
-} from "../../../redux/users-selectors";
 import {selectIsAuth} from "../../../redux/auth-selectors";
+import {getUsers} from "./model/selectors/getUsers/getUsers";
+import {getPageSize} from "./model/selectors/getPageSize/getPageSize";
+import {getCurrentPage} from "./model/selectors/getCurrentPage/getCurrentPage";
+import {getTotalUsersCount} from "./model/selectors/getTotalUsersCount/getTotalUsersCount";
+import {getFetch} from "./model/selectors/getFetch/getFetch";
+import {getFollowInProgress} from "./model/selectors/getFollowInProgress/getFollowInProgress";
 
 type UsersContainerType = {
     usersPage: UsersPageType[]
