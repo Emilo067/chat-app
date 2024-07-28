@@ -1,23 +1,35 @@
-import React, {ChangeEvent, useEffect} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import styled from "styled-components";
-import {getProfileStatus, getUserProfile, ProfileType, updatePhoto} from "../../model/profile-reducer";
+import {
+    getProfileStatus,
+    getUserProfile,
+    ProfileType,
+    ProfileUpdateStatus,
+    updatePhoto,
+    updateProfile
+} from "../../model/profile-reducer";
 import avatarka from "../../../../../assets/img/avatarkaPost.png";
-import check from "../../../../../assets/img/check.png";
-import cross from "../../../../../assets/img/cross.png";
 import {Preloader} from "../../../../../common/components/Preloader/Preloader";
 import {useAppSelector} from "../../../../../common/hooks/useAppSelector";
 import {ProfileStatus} from "../profile-status/ProfileStatusFC";
 import {useAppDispatch} from "../../../../../common/hooks/useAppDispatch";
 import {useParams} from "react-router-dom";
+import {ProfileData} from "../profile/profileData/ProfileData";
+import ProfileDataReduxForm, {FormProfileData} from "../profile/profileSetDataForm/ProfileSetDataForm";
 
 
-const AvaDescription = () => {
+const ProfileDescription = () => {
     const dispatch = useAppDispatch()
     const profile = useAppSelector<ProfileType>(state => state.profilePage.profile)
     const status = useAppSelector<string>(state => state.profilePage.status)
     const myId = useAppSelector<number | null>(state => state.auth.id)
+    const profileUpdateStatus = useAppSelector<ProfileUpdateStatus>(state => state.profilePage.profileUpdateStatus)
     const params = useParams()
-    console.log(params.userId)
+
+    const isOwner = !params.userId && myId
+
+    const [editMode, setEditMode] = useState(false)
+
     useEffect(() => {
         if (params.userId) {
             dispatch(getUserProfile(+params.userId))
@@ -34,9 +46,20 @@ const AvaDescription = () => {
 
 
     const selectPhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            if (e.currentTarget.files?.length) {
-                dispatch(updatePhoto(e.currentTarget.files[0]))
-            }
+        if (e.currentTarget.files?.length) {
+            dispatch(updatePhoto(e.currentTarget.files[0]))
+        }
+    }
+
+    const onClickHandler = () => {
+        setEditMode(true);
+    }
+
+    const onSubmit = (formData: FormProfileData) => {
+        dispatch(updateProfile(formData))
+        if(profileUpdateStatus === 'success') {
+            setEditMode(false)
+        }
     }
 
     if (!profile) {
@@ -47,16 +70,20 @@ const AvaDescription = () => {
             <img src={profile.photos.large !== null ? profile.photos.large : avatarka} alt={'userPhoto'}/>
             {!params.userId && <input type={'file'} onChange={selectPhotoHandler}/>}
             {!params.userId ? <ProfileStatus/> : <div>{status}</div>}
-            <div>Full name: {profile.fullName}</div>
-            <div>About me: {profile.aboutMe}</div>
-            <div>Job: {profile.lookingForAJob ? <img src={check} alt={'check'}/> :
-                <img src={cross} alt={'cross'}/>}</div>
+
+            {isOwner && !editMode && <div>
+                <button onClick={onClickHandler}>Edit</button>
+            </div>}
+
+            {editMode ? <ProfileDataReduxForm initialValues={profile} onSubmit={onSubmit}/> : <ProfileData/>}
+
         </StyledAvaDescription>
     );
 };
 
-export default AvaDescription;
+export default ProfileDescription;
 
 const StyledAvaDescription = styled.div`
 
 `
+
