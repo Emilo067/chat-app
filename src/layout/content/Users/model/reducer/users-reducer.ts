@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
-import {usersApi} from "../api/api";
-import {changeObjectInArray} from "../common/utils/object-helper";
+import {usersApi} from "../../../../../api/api";
+import {changeObjectInArray} from "../../../../../common/utils/object-helper";
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
