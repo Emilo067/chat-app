@@ -1,4 +1,4 @@
-import ava from '../assets/img/avatarkaPost.png'
+import ava from '../../assets/img/avatarkaPost.png'
 // import {sidebarReducer} from "./sidebar-reducer";
 // import {AddPostACType, profileReducer, UpdateNewPostTextACType} from "./profile-reducer";
 // import {AddMessageACType, dialogsReducer, UpdateNewMessageTextACType} from "./dialogs-reducer";
