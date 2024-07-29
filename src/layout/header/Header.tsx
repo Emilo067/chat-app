@@ -5,6 +5,9 @@ import {useAppSelector} from "../../common/hooks/useAppSelector";
 import {selectIsAuth, selectLogin} from "../../redux/auth-selectors";
 import {logout} from "../../redux/auth-reducer";
 import {useAppDispatch} from "../../common/hooks/useAppDispatch";
+import {Container} from "../../common/components/Container";
+import svgLogo from '../../assets/svg/Social Network.svg'
+import {Button} from "../../common/components/Button/Button";
 
 const Header = () => {
 
@@ -17,15 +20,17 @@ const Header = () => {
     }
 
     return (
-        <S.StyledHeader>
-            <img alt={""} src={"https://png.pngtree.com/template/20191024/ourmid/pngtree-mountain-landscape-logo-design-hiking-travel-and-adventure-concept-design-image_323034.jpg"}/>
+        <S.Header>
+            <Container>
+                <img alt={""}
+                     src={svgLogo}/>
 
-            <div>
-                {login ? <span>{login}</span> : <NavLink to={'/login'}>Login</NavLink>}
-                {isAuth ? <button onClick={logoutHandler}>logout</button> : "" }
-            </div>
-
-        </S.StyledHeader>
+                <S.WrapperNameButton>
+                    {login ? <span>{login}</span> : <Button><NavLink style={{textDecoration: "none"}} to={'/login'}>Login</NavLink></Button>}
+                    {isAuth ? <Button onClick={logoutHandler}>logout</Button> : ""}
+                </S.WrapperNameButton>
+            </Container>
+        </S.Header>
     );
 };
 
