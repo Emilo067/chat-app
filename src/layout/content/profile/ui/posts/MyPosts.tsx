@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Post from "./post/Post";
 import {ProfilePageType} from "../../model/profile-reducer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {maxLength, required} from "../../../../../common/utils/validators";
 import {FormControl} from "../../../../../common/components/FormsControls/FormsControls";
 
 type MyPostsPropsType = {
@@ -15,14 +14,11 @@ type FormPost = {
     updateNewPost: string
 }
 
-let maxLength10 = maxLength(10)
-
 const PostForm: React.FC<InjectedFormProps<FormPost>> = (props) => {
     return <>
         <form onSubmit={props.handleSubmit}>
             <Field component={FormControl} name={"updateNewPost"}
                    tagName="textarea"
-                   validate={[required, maxLength10]}
                    placeholder={"Post message"}
             />
             <button style={{display: "block", float: "right"}}>Send</button>
