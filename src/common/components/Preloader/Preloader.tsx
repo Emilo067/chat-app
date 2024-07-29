@@ -1,9 +1,9 @@
 import React from 'react';
-import preloader from '../../../assets/svg/loader.svg'
+import './Preloader.css'
 export const Preloader = () => {
     return (
-        <div>
-            <img src={preloader} alt={'preloader'}/>
+        <div className="wrapper">
+            <span className="loader"></span>
         </div>
     );
 };

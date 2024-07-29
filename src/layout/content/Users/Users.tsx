@@ -68,6 +68,7 @@ export const Users: FC<UsersPropsType> = (props: UsersPropsType) => {
                 </span>
                 </div>)}
             </div>
+            <Paginator onChangePage={props.onChangePage} portionSize={10}/>
         </div>
     );
 };
