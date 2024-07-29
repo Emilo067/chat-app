@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 import {Friend} from "./friend/Friend";
 import {SidebarType} from "../../redux/sidebar-reducer";
+import {theme} from "../../app/styles/theme";
 
 type NavbarPropsType = {
     sidebarData: SidebarType
@@ -21,9 +22,6 @@ const Navbar: FC<NavbarPropsType> = ({sidebarData}) => {
                         </StyledItem>
                         <StyledItem>
                             <NavLink to={'/dialogs'}>Messages</NavLink>
-                        </StyledItem>
-                        <StyledItem>
-                            <NavLink to={'/news'}>News</NavLink>
                         </StyledItem>
                         <StyledItem>
                             <NavLink to={'/users'}>Users</NavLink>
@@ -97,7 +95,8 @@ export default Navbar;
 const StyledNavbarContent = styled.div`
   padding-left: 10px;
   grid-area: n;
-  background-color: green;
+  border-radius: 15px; 
+  background-color: ${theme.colors.primaryBg};
 `
 
 
