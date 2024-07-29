@@ -12,6 +12,7 @@
   },
   "homepage": "https://Emilo067.github.io/samurai-way-main",
   "dependencies": {
+    "@fontsource-variable/orbitron": "^5.0.19",
     "@reduxjs/toolkit": "^2.2.2",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "12.0.0",
