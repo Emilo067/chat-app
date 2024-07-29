@@ -1,24 +1,39 @@
 import styled from "styled-components";
 
 type SelectedPageProps = {
-    isSelected: boolean;
+    isSelected?: boolean;
 };
 
 export const SelectedPage = styled.span<SelectedPageProps>`
-  border: 1px solid black;
-  font-weight: ${({isSelected}) => (isSelected ? "bold" : "normal")};
-  color: ${({isSelected}) => (isSelected ? "red" : "black")};
+  position: relative;
+  padding: 20px 25px;
+  text-decoration: none;
+  color: ${props => props.isSelected ? '#13FF0C' : '#fff'};
+  font-weight: 500;
+  cursor: pointer;
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
 `;
 
 
 const PaginatorWrapperStyle = styled.div`
-display: flex;
-gap: 5px;
+  position: relative;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+  border-radius: 2px;
 `
 
 const PagesWrapper = styled.div`
-    display: flex;
-  gap: 3px;
+  list-style-type: none;
+  display: inline-block;
+  
+ 
 `
 
 

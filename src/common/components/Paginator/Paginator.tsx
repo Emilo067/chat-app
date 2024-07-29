@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useAppSelector} from "../../hooks/useAppSelector";
-import {S} from './Paginator.styles'
+import {S, SelectedPage} from './Paginator.styles'
 
 
 type Props = {
@@ -38,14 +38,14 @@ export const Paginator = ({onChangePage, portionSize}: Props) => {
     }
 
     return (<S.PaginatorWrapperStyle>
-            {portionNumber > 1 && <button onClick={clickLeftPortionNumbePageHandler}>left</button>}
+            {portionNumber > 1 && <SelectedPage onClick={clickLeftPortionNumbePageHandler}>Prev</SelectedPage>}
             <S.PagesWrapper>
                 {pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber).map(p => <S.SelectedPage
                     onClick={() => {
                         onChangePage(p)
                     }} isSelected={currentPage === p}>{p}</S.SelectedPage>)}
             </S.PagesWrapper>
-            {portionsCount > portionNumber && <button onClick={clickRightPortionNumbePageHandler}>right</button>}
+            {portionsCount > portionNumber && <SelectedPage onClick={clickRightPortionNumbePageHandler}>Next</SelectedPage>}
         </S.PaginatorWrapperStyle>
     );
 };

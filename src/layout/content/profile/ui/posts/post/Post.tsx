@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import styled from "styled-components";
 import {Avatar} from "../../../../../../common/components/Avatar/Avatar";
 import ava from '../../../../../../assets/img/avatarkaPost.png'
+import {useAppSelector} from "../../../../../../common/hooks/useAppSelector";
 
 
 type PostPropsType = {
@@ -15,9 +16,12 @@ const Post: FC<PostPropsType> = (
         likes
     }
 ) => {
+
+    const photo = useAppSelector(state => state.profilePage.profile?.photos)
+
     return (
         <StyledPost>
-            <Avatar img={ava}/>
+            <Avatar img={photo?.small ? ava : ''}/>
             {post}
             <div>likes: {likes}</div>
         </StyledPost>
