@@ -1,21 +1,16 @@
 import React from 'react';
 import './error-page.css'
+import imageError from '../../../assets/svg/page_not_found.svg'
 
 export const ErrorPage = () => {
     return ( <div className="container">
         <div className="text">
             <h1>Page Not Found</h1>
-            <p>We can't seem to find the page you're looking for. Please check the URL for any typos.</p>
-            <div className="input-box">
-                <input type="text" placeholder="Search..."/>
-                    <button><i className="fa-solid fa-search"></i></button>
-            </div>
+            <p style={{color: "#fff"}}>We can't seem to find the page you're looking for. Please check the URL for any typos.</p>
             <ul className="menu">
                 <li><a href="#">Go to Homepage</a></li>
-                <li><a href="#">Visit our Blog</a></li>
-                <li><a href="#">Contact support</a></li>
             </ul>
         </div>
-        <div><img className="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc59yywjBMG-WqlVrGEH8pgNn-jQ4zp5npdg&s" alt=""/></div>
+        <div><img className="image" src={imageError} alt="Page Not Found"/></div>
     </div>);
 };
