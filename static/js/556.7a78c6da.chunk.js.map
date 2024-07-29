@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/556.7a78c6da.chunk.js","mappings":"2IAWA,UATa,WACT,OACI","sources":["layout/content/news/News.tsx"],"sourcesContent":["import React from 'react';\r\n\r\nconst News = () => {\r\n    return (\r\n        <div>\r\n            News\r\n        </div>\r\n    );\r\n};\r\n\r\n\r\nexport default News"],"names":[],"sourceRoot":""}
