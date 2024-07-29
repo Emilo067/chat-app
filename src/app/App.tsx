@@ -3,15 +3,15 @@ import './App.css';
 import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import Navbar from "../layout/navbar/Navbar";
 import Header from "../layout/header/Header";
-import Login from "../common/components/Login/LoginContainer";
 import {connect, Provider} from "react-redux";
-import store, {AppStateType} from "../redux/store-redux";
+import store, {AppStateType} from "./store/store-redux";
 import {initializeApp} from "../redux/app-reducer";
 import {Preloader} from "../common/components/Preloader/Preloader";
 import {GlobalStyles} from "./styles/GlobalStyles";
 import Profile from "../layout/content/profile/ui/profile/profile";
 import {ErrorPage} from "../common/components/error-page/error-page";
 import MatrixBackground from "../common/components/particle/MatrixBG";
+import {Login} from "../common/components/Login/Login";
 
 type Props = {
     state: any
@@ -20,26 +20,16 @@ type Props = {
 }
 
 const DialogsContainer = lazy(() => import('../layout/content/dialogs/DialogsContainer'))
-const News = lazy(() => import('../layout/content/news/News'))
 const Music = lazy(() => import('../layout/content/music/Music'))
 const Settings = lazy(() => import('../layout/content/settings/Settings'))
 const UsersContainer = lazy(() => import('../layout/content/Users/UsersContainer'))
 
 class App extends React.Component<Props> {
 
-    catchErrorUnhandledErrors = (promiseRejectionEvent: PromiseRejectionEvent) => {
-        alert('Some error occurred')
-    }
-
     componentWillMount() {
         if (this.props.initializeApp) {
             this.props.initializeApp()
         }
-        window.addEventListener('unhandledrejection',  this.catchErrorUnhandledErrors)
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('unhandledrejection',  this.catchErrorUnhandledErrors)
     }
 
     render() {
@@ -59,13 +49,12 @@ class App extends React.Component<Props> {
 
                 <div className={"app-wrapper-content"}>
 
-                    <Suspense fallback={<h1 style={{color: 'red'}}>LOADING....</h1>}>
+                    <Suspense fallback={<Preloader/>}>
                         <Routes>
                             <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
                             <Route path={'/profile/:userId?'} element={<Profile/>}/>
                             <Route path={'/dialogs/*'}
                                    element={<DialogsContainer/>}/>
-                            <Route path={'/news'} element={<News/>}/>
                             <Route path={'/music'} element={<Music/>}/>
                             <Route path={'/settings'} element={<Settings/>}/>
                             <Route path={'/users'} element={<UsersContainer/>}/>
