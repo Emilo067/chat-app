@@ -4,7 +4,8 @@ import styled from "styled-components";
 type Avatar = {
     width?: string
     height?: string
-    img: string
+    img?: string
+    href?: string
 }
 
 export const Avatar: FC<Avatar> = ({width, height, img}) => {
