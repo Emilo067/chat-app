@@ -1,31 +1,41 @@
 import React from 'react';
 import styled from "styled-components";
-import {WrappedFieldProps} from "redux-form";
+import {Field, WrappedFieldProps} from "redux-form";
+import { S } from './Input.styles';
 
 type FormControlProps = WrappedFieldProps & {
-    tagName: 'textarea' | 'input'
+    tagName?: 'textarea' | 'input'
 }
 
-export const FormControl: React.FC<FormControlProps> = ({ input, meta, tagName, ...props }) => {
+export const FormControl: React.FC<FormControlProps> = ({input, meta, tagName, ...props}) => {
     const hasError = meta.touched && meta.error;
-    const Tag = tagName;
 
     return (
         <StyledFormWrapper error={hasError}>
-            <Tag {...input} {...props} />
+            <S.Field {...input} {...props} />
             {hasError ? <span>{meta.error}</span> : null}
         </StyledFormWrapper>
     );
 };
 
 
-
-const StyledFormWrapper = styled.div<{error: boolean}>`
+const StyledFormWrapper = styled.div<{ error: boolean }>`
   textarea {
-    border: ${props => props.error ? '1px solid red' : '' };
+    border: ${props => props.error ? '1px solid red' : ''};
   }
-  
+
   span {
     color: red;
   }
 `
+
+export const createField = (placeholder: string, name: string, validators: any, tagName: 'input' | 'textarea', props?: React.HTMLProps<HTMLInputElement>, label?: string) => {
+    return (<div style={{display: 'flex', gap: '3px'}}>
+            <Field name={name} placeholder={placeholder} validate={validators}
+                   component={(fieldProps: WrappedFieldProps) => (
+                       <FormControl {...fieldProps} tagName={tagName} {...props} />
+                   )}/>
+            {label && <label htmlFor={name}>{label}</label>}
+        </div>
+    )
+}
