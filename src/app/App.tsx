@@ -1,8 +1,7 @@
 import React, {lazy, Suspense} from 'react';
 import './App.css';
 import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
-import Navbar from "../layout/navbar/Navbar";
-import Header from "../layout/header/Header";
+import Header from "../widgets/header/Header";
 import {connect, Provider} from "react-redux";
 import store, {AppStateType} from "./store/store-redux";
 import {initializeApp} from "../redux/app-reducer";
@@ -12,6 +11,8 @@ import Profile from "../layout/content/profile/ui/profile/profile";
 import {ErrorPage} from "../common/components/error-page/error-page";
 import MatrixBackground from "../common/components/particle/MatrixBG";
 import {Login} from "../common/components/Login/Login";
+import {Container} from "../common/components/Container";
+import Navbar from "../widgets/navbar/Navbar";
 
 type Props = {
     state: any
@@ -48,21 +49,21 @@ class App extends React.Component<Props> {
                 <Navbar sidebarData={state.sidebar}/>
 
                 <div className={"app-wrapper-content"}>
-
-                    <Suspense fallback={<Preloader/>}>
-                        <Routes>
-                            <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
-                            <Route path={'/profile/:userId?'} element={<Profile/>}/>
-                            <Route path={'/dialogs/*'}
-                                   element={<DialogsContainer/>}/>
-                            <Route path={'/music'} element={<Music/>}/>
-                            <Route path={'/settings'} element={<Settings/>}/>
-                            <Route path={'/users'} element={<UsersContainer/>}/>
-                            <Route path={'/login'} element={<Login/>}/>
-                            <Route path={'/*'} element={<ErrorPage/>}/>
-                        </Routes>
-                    </Suspense>
-
+                    <Container>
+                        <Suspense fallback={<Preloader/>}>
+                            <Routes>
+                                <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
+                                <Route path={'/profile/:userId?'} element={<Profile/>}/>
+                                <Route path={'/dialogs/*'}
+                                       element={<DialogsContainer/>}/>
+                                <Route path={'/music'} element={<Music/>}/>
+                                <Route path={'/settings'} element={<Settings/>}/>
+                                <Route path={'/users'} element={<UsersContainer/>}/>
+                                <Route path={'/login'} element={<Login/>}/>
+                                <Route path={'/*'} element={<ErrorPage/>}/>
+                            </Routes>
+                        </Suspense>
+                    </Container>
                 </div>
 
             </div>

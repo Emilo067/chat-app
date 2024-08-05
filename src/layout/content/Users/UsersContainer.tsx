@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../../app/store/store-redux";
 import {fetchUsers, follow, unfollow, UsersPageType} from "./model/reducer/users-reducer";
 import React from "react";
-import {Users} from "./Users";
+import {Users} from "./ui/Users";
 import {Preloader} from "../../../common/components/Preloader/Preloader";
 import {compose} from "redux";
 import {selectIsAuth} from "../../../redux/auth-selectors";

@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import styled from "styled-components";
 import {DialogsItem} from "./dialogsItem/DialogItem";
 import {Message} from "./message/Message";
@@ -18,7 +18,7 @@ type FormDialogType = {
 
 const maxLength100 = maxLength(100)
 
-const FormDialog: React.FC<InjectedFormProps<FormDialogType>> = (props) => {
+const FormDialog: React.FC<InjectedFormProps<FormDialogType>> = memo((props) => {
 
     return <form onSubmit={props.handleSubmit}>
         <Field component={FormControl}
@@ -29,7 +29,7 @@ const FormDialog: React.FC<InjectedFormProps<FormDialogType>> = (props) => {
         />
         <button style={{display: 'block', float: 'right'}}>Send</button>
     </form>
-}
+})
 
 const FormReduxDialog = reduxForm<FormDialogType>({
     form: "dialog"
@@ -65,7 +65,7 @@ const Dialogs: FC<DialogPropsType> = ({dialogsPage, sendMessage}) => {
     );
 };
 
-export default Dialogs;
+export default memo(Dialogs);
 
 const StyledDialogs = styled.div`
   display: grid;

@@ -2,6 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import {useAppDispatch} from "../../../../../common/hooks/useAppDispatch";
 import {useAppSelector} from "../../../../../common/hooks/useAppSelector";
 import {updateStatus} from "../../model/profile-reducer";
+import {Field} from "../../../../../common/components/FormsControls/Input.styles";
 
 export const ProfileStatus = () => {
     const status = useAppSelector<string>(state => state.profilePage.status)
@@ -28,7 +29,7 @@ export const ProfileStatus = () => {
     return (
         <>
             {editMode ? <div>
-                    <input onChange={onChange} value={value} onBlur={editModeOff}
+                    <Field onChange={onChange} value={value} onBlur={editModeOff}
                            autoFocus={true} type="text"/>
                 </div> :
                 <div onDoubleClick={editModeOn}>

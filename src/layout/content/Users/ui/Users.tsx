@@ -1,8 +1,9 @@
 import React, {FC} from 'react';
-import avatarka from "../../../assets/img/avatarkaPost.png";
-import {UsersPageType} from "./model/reducer/users-reducer";
+import avatarka from "../../../../assets/img/avatarkaPost.png";
+import {UsersPageType} from "../model/reducer/users-reducer";
 import {NavLink} from "react-router-dom";
-import {Paginator} from "../../../common/components/Paginator/Paginator";
+import {Paginator} from "../../../../common/components/Paginator/Paginator";
+import {Button} from "../../../../common/components/Button/Button";
 
 type UsersPropsType = {
     usersPage: UsersPageType[]
@@ -39,33 +40,27 @@ export const Users: FC<UsersPropsType> = (props: UsersPropsType) => {
                         </NavLink>
 
                     </div>
+                      <span>
+                        <div>{u.name}</div>
+                        <div>{u.status}</div>
+                    </span>
                     <div>
                         {u.followed
-                            ? <button
+                            ? <Button
                                 disabled={props.followInProgress.some(us => us === u.id)}
                                 onClick={() => {
                                     props.unfollow(u.id)
                                     //props.followThunk(u.id)
                                 }
-                                }>Unfollow</button>
-                            : <button
+                                }>Unfollow</Button>
+                            : <Button
                                 disabled={props.followInProgress.some(us => us === u.id)}
                                 onClick={() => {
                                     props.follow(u.id)
                                 }
-                                }>Follow</button>}
+                                }>Follow</Button>}
                     </div>
                     </span>
-                    <span>
-                    <span>
-                        <div>{u.name}</div>
-                        <div>{u.status}</div>
-                    </span>
-                    <span>
-                        <div>{'u.location.country'}</div>
-                        <div>{'u.location.city'}</div>
-                    </span>
-                </span>
                 </div>)}
             </div>
             <Paginator onChangePage={props.onChangePage} portionSize={10}/>

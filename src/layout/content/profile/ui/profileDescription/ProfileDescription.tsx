@@ -16,6 +16,8 @@ import {useAppDispatch} from "../../../../../common/hooks/useAppDispatch";
 import {useParams} from "react-router-dom";
 import {ProfileData} from "../profile/profileData/ProfileData";
 import ProfileDataReduxForm, {FormProfileData} from "../profile/profileSetDataForm/ProfileSetDataForm";
+import {Avatar} from "../../../../../common/components/Avatar/Avatar";
+import {Button} from "../../../../../common/components/Button/Button";
 
 
 const ProfileDescription = () => {
@@ -67,12 +69,12 @@ const ProfileDescription = () => {
     }
     return (
         <StyledAvaDescription>
-            <img src={profile.photos.large !== null ? profile.photos.large : avatarka} alt={'userPhoto'}/>
+            <Avatar radius={'50'} height={'150'} width={'150'}  img={profile.photos.large !== null ? profile.photos.large : avatarka} />
             {!params.userId && <input type={'file'} onChange={selectPhotoHandler}/>}
             {!params.userId ? <ProfileStatus/> : <div>{status}</div>}
 
             {isOwner && !editMode && <div>
-                <button onClick={onClickHandler}>Edit</button>
+                <Button onClick={onClickHandler}>Edit</Button>
             </div>}
 
             {editMode ? <ProfileDataReduxForm initialValues={profile} onSubmit={onSubmit}/> : <ProfileData/>}
@@ -84,6 +86,6 @@ const ProfileDescription = () => {
 export default ProfileDescription;
 
 const StyledAvaDescription = styled.div`
-
+  margin: 0 auto;
 `
 

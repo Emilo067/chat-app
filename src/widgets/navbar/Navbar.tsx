@@ -4,6 +4,7 @@ import {NavLink} from "react-router-dom";
 import {Friend} from "./friend/Friend";
 import {SidebarType} from "../../redux/sidebar-reducer";
 import {theme} from "../../app/styles/theme";
+import {Container} from "../../common/components/Container";
 
 type NavbarPropsType = {
     sidebarData: SidebarType
@@ -16,6 +17,7 @@ const Navbar: FC<NavbarPropsType> = ({sidebarData}) => {
     })
 
     return (<StyledNavbarContent>
+            <Container>
                     <StyledNav>
                         <StyledItem>
                             <NavLink to={'/profile'}>Profile</NavLink>
@@ -40,6 +42,7 @@ const Navbar: FC<NavbarPropsType> = ({sidebarData}) => {
                         {friendsMap}
 
                     </StyledFriendsContent>
+            </Container>
                 </StyledNavbarContent>
 );
 };
