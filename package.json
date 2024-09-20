@@ -1,5 +1,5 @@
 {
-  "name": "chat-app",
+  "name": "samurai-way",
   "version": "0.1.0",
   "private": true,
   "jest": {
@@ -10,7 +10,7 @@
   "resolutions": {
     "caniuse-lite": "*"
   },
-  "homepage": "https://github.com/Emilo067/chat-app",
+  "homepage": "https://Emilo067.github.io/samurai-way-main",
   "dependencies": {
     "@fontsource-variable/orbitron": "^5.0.19",
     "@reduxjs/toolkit": "^2.2.2",
