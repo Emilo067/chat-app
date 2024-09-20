@@ -10,7 +10,7 @@
   "resolutions": {
     "caniuse-lite": "*"
   },
-  "homepage": "https://Emilo067.github.io/samurai-way-main",
+  "homepage": "https://github.com/Emilo067/chat-app",
   "dependencies": {
     "@fontsource-variable/orbitron": "^5.0.19",
     "@reduxjs/toolkit": "^2.2.2",
