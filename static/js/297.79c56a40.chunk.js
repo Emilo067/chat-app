@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkchat_app=self.webpackChunkchat_app||[]).push([[297],{1297:function(c,u,a){a.r(u);a(2791);var e=a(184);u.default=function(){return(0,e.jsx)("div",{children:"Music"})}}}]);
+//# sourceMappingURL=297.79c56a40.chunk.js.map
